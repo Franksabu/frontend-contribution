@@ -23,7 +23,6 @@ urlpatterns = [
     path("", home, name="home"),
     path("", include("membre.urls")),
     path("", include("cotisation.urls")),
-    path("", include("contribution.urls")),
     path("", include("assistance.urls")),
     path("", include("type_cotisation.urls")),
     path("", include("detail_cotisation.urls")),

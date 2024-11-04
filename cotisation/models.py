@@ -48,40 +48,43 @@ class Cotisation(models.Model):
         return f"{self.montant_min} "
 
 
-class Contribution(models.Model):
-    reference = models.CharField(max_length=50, unique=True)
-    montant = models.FloatField()
-    date_contrib = models.DateField()
-    membre = models.ForeignKey(
-        Membre, on_delete=models.CASCADE
-    )
-    cotisation = models.ForeignKey(
-        Cotisation, on_delete=models.CASCADE
-    )
-    date_create = models.DateTimeField(auto_now_add=True)
-    date_validate = models.DateTimeField(null=True, blank=True)
-    date_update = models.DateTimeField(auto_now=True)
-    date_delete = models.DateTimeField(null=True, blank=True)
-    user_create = models.ForeignKey(
-        User, related_name="contribution_created", on_delete=models.CASCADE
-    )
-    user_validate = models.ForeignKey(
-        User,
-        related_name="contribution_validated",
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-    )
-    user_delete = models.ForeignKey(
-        User,
-        related_name="contribution_deleted",
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-    )
+# ----------------models pour la contribution-------------------------#
 
-    class Meta:
-        ordering = ("-id",)
 
-    def __str__(self):
-        return f"{self.reference} {self.montant} {self.date_contrib} {self.membre} {self.cotisation}"
+# class Contribution(models.Model):
+#     reference = models.CharField(max_length=50, unique=True)
+#     montant = models.FloatField()
+#     date_contrib = models.DateField()
+#     membre = models.ForeignKey(
+#         Membre, on_delete=models.CASCADE
+#     )
+#     cotisation = models.ForeignKey(
+#         Cotisation, on_delete=models.CASCADE
+#     )
+#     date_create = models.DateTimeField(auto_now_add=True)
+#     date_validate = models.DateTimeField(null=True, blank=True)
+#     date_update = models.DateTimeField(auto_now=True)
+#     date_delete = models.DateTimeField(null=True, blank=True)
+#     user_create = models.ForeignKey(
+#         User, related_name="contribution_created", on_delete=models.CASCADE
+#     )
+#     user_validate = models.ForeignKey(
+#         User,
+#         related_name="contribution_validated",
+#         null=True,
+#         blank=True,
+#         on_delete=models.CASCADE,
+#     )
+#     user_delete = models.ForeignKey(
+#         User,
+#         related_name="contribution_deleted",
+#         null=True,
+#         blank=True,
+#         on_delete=models.CASCADE,
+#     )
+
+#     class Meta:
+#         ordering = ("-id",)
+
+#     def __str__(self):
+#         return f"{self.reference} {self.montant} {self.date_contrib} {self.membre} {self.cotisation}"

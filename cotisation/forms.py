@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contribution, Cotisation
+from .models import Cotisation
 from parametrage.nemero import random_reference
 
 
@@ -27,9 +27,7 @@ class CotisationForm(forms.ModelForm):
             "reference": forms.TextInput(
                 attrs={"placeholder": "référence...", "readonly": "readonly"}
             ),
-            "type_cotisation": forms.Select(
-                attrs={"class": "form-control"}
-            ),
+            "type_cotisation": forms.Select(attrs={"class": "form-control"}),
             "montant_min": forms.NumberInput(
                 attrs={"class": "form-control", "placeholder": "Montant minimum..."}
             ),
@@ -57,50 +55,50 @@ class CotisationForm(forms.ModelForm):
 
 # --------------------ContributionForm --------------------------------------#
 
-class ContributionForm(forms.ModelForm):
-    class Meta:
-        model = Contribution
-        fields = [
-            "reference",
-            "montant",
-            "date_contrib",
-            "membre",
-            "cotisation"
-        ]
-        exclude = (
-            "date_create",
-            "date_validate",
-            "date_update",
-            "date_delete",
-            "user_create",
-            "user_validate",
-            "user_delete",
-        )
-        widgets = {
-            "reference": forms.TextInput(
-                attrs={"placeholder": "référence...", "readonly": "readonly"}
-            ),
-            "montant": forms.NumberInput(
-                attrs={"class": "form-control", "placeholder": "Montant minimum..."}
-            ),
-            "date_contrib": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
-            ),
-            "membre": forms.Select(
-                attrs={"class": "form-control"}
-            ),
-            "cotisation": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
-            )
-        }
-        labels = {
-            "reference": "Référence",
-            "membre": "Membre",
-            "cotisation": "Cotisation",
-            "date_contrib": "Date de contribution",
-            "montant": "Montant de contribution"
-        }
+# class ContributionForm(forms.ModelForm):
+#     class Meta:
+#         model = Contribution
+#         fields = [
+#             "reference",
+#             "montant",
+#             "date_contrib",
+#             "membre",
+#             "cotisation"
+#         ]
+#         exclude = (
+#             "date_create",
+#             "date_validate",
+#             "date_update",
+#             "date_delete",
+#             "user_create",
+#             "user_validate",
+#             "user_delete",
+#         )
+#         widgets = {
+#             "reference": forms.TextInput(
+#                 attrs={"placeholder": "référence...", "readonly": "readonly"}
+#             ),
+#             "montant": forms.NumberInput(
+#                 attrs={"class": "form-control", "placeholder": "Montant minimum..."}
+#             ),
+#             "date_contrib": forms.DateInput(
+#                 attrs={"class": "form-control", "type": "date"}
+#             ),
+#             "membre": forms.Select(
+#                 attrs={"class": "form-control"}
+#             ),
+#             "cotisation": forms.DateInput(
+#                 attrs={"class": "form-control", "type": "date"}
+#             )
+#         }
+#         labels = {
+#             "reference": "Référence",
+#             "membre": "Membre",
+#             "cotisation": "Cotisation",
+#             "date_contrib": "Date de contribution",
+#             "montant": "Montant de contribution"
+#         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["reference"].initial = random_reference.new_numero("CONTRI")
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields["reference"].initial = random_reference.new_numero("CONTRI")
