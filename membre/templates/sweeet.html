@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de Suppression</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<button id="deleteButton">Supprimer le fichier</button>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('deleteButton').onclick = function() {
+        Swal.fire({
+            title: 'Êtes-vous sûr de vouloir supprimer ?',
+            text: 'Vous ne pourrez pas récupérer ce fichier imaginaire !',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Supprimer',
+            cancelButtonText: 'Annuler',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Ici, vous pouvez ajouter la logique pour envoyer une requête à votre serveur
+                // Par exemple, en utilisant fetch pour faire une requête POST vers une API
+
+                fetch('/delete-file', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ filePath: 'chemin/vers/le/fichier' }) // Changez le chemin ici
+                })
+                .then(response => {
+                    if (response.ok) {
+                        Swal.fire('Fichier supprimé !', '', 'success');
+                    } else {
+                        Swal.fire('Erreur lors de la suppression du fichier !', '', 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Erreur lors de la requête !', '', 'error');
+                });
+
+            } else if (result.isDismissed) {
+                Swal.fire('Fichier non supprimé !');
+            }
+        });
+    };
+</script>
+
+</body>
+</html>

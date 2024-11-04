@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Contribution | {% block title %}{% endblock %}</title>
+    <!-- Favicon icon -->
+    {% load static %} <!-- Insérer ici pour utiliser les fichiers statiques -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+
+    {% include 'includes/header.html' %}
+
+    {% block style %}{% endblock %}
+
+</head>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+        
+        {% include 'includes/navbar.html' %}
+
+        {% include 'includes/sidebar.html' %}
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            {% block content %}{% endblock %}
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        {% include 'includes/modal.html' %}
+
+
+
+		<!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+        {% include 'includes/footer.html' %}
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    {% include 'includes/script.html' %}
+
+    {% block scripts %}{% endblock %}		
+	
+</body>
+</html>

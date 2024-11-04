@@ -1,0 +1,73 @@
+{% load widget_tweaks %}
+<div class="row">
+  <div class="col-xl-12 col-xxl-12 col-sm-12">	
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="form-group">
+            <i class="text-danger">*</i>
+            {{ form.reference.label_tag }}
+            {% render_field form.reference  class+="form-control form-control-sm" %}
+          </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          <i class="text-danger">*</i>
+          {{ form.nom.label_tag }}
+          {% render_field form.nom  class+="form-control form-control-sm" %}
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          <i class="text-danger">*</i>
+          {{ form.prenom.label_tag }}
+          {% render_field form.prenom  class+="form-control form-control-sm" %}
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          {{ form.adresse.label_tag }}
+          {% render_field form.adresse  class+="form-control form-control-sm" %}
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          {{ form.telephone.label_tag }}
+          {% render_field form.telephone  class+="form-control form-control-sm" %}
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          {{ form.email.label_tag }}
+          {% render_field form.email  class+="form-control form-control-sm" %}
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <i class="text-danger">*</i>
+          {{ form.sex.label_tag }}
+          {% render_field form.sex  class+="form-control form-control-sm" %}                                                                                                                    
+        </div>													
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <i class="text-danger">*</i>
+          {{ form.type_id.label_tag }}
+          {% render_field form.type_id  class+="form-control form-control-sm" %} 
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <i class="text-danger">*</i>
+          {{ form.numero_id.label_tag }}
+          {% render_field form.numero_id  class+="form-control form-control-sm" %}
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-6 col-sm-12">
+        <div class="form-group">
+          {{ form.description.label_tag }}
+          {% render_field form.description  class+="form-control form-control-sm" %}
+        </div>
+      </div>											
+    </div>									
+  </div>
+  </div>

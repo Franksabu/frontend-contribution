@@ -1,0 +1,107 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}Detail d'assistance{% endblock %}
+
+{% block content%}
+<div class="container-fluid">
+        
+    <div class="row page-titles mx-0">
+        <div class="col-sm-6 p-md-0">
+            <div class="welcome-text">
+                <h4>Detail d'assistance</h4>
+            </div>
+        </div>
+        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0);">Assistances</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0);">Detail d'assistance</a></li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xl-3 col-xxl-4 col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="text-center p-3 overlay-box" style="background-image: url(images/big/img1.jpg);">
+                            <div class="profile-photo">
+                                <img class="img-fluid rounded-circle" width="100" src="{% static 'images/profile/small/pic1.jpg' %}" alt="">
+                            </div>
+                            <h3 class="mt-3 mb-1 text-white">Deangelo Sena</h3>
+                        </div>                                    
+                        <div class="card-footer text-center border-0 mt-0">								
+                            <a href="javascript:void(0);" class="btn btn-primary btn-rounded px-4">Follow</a>
+                            <a href="javascript:void(0);" class="btn btn-warning btn-rounded px-4">Message</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-xxl-8 col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="profile-tab">
+                        <div class="custom-tab-1">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item"><a href="#about-me" data-toggle="tab" class="nav-link active show">information de cotisation</a></li>
+                                <!-- <li class="nav-item"><a href="#my-posts" data-toggle="tab" class="nav-link">Posts</a></li> -->
+                            </ul>
+                            <div class="tab-content">
+                                <div id="about-me" class="tab-pane fade active show">
+                                    <div class="profile-personal-info pt-4">
+                                        <h4 class="text-primary mb-4">Information personnelle</h4>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Reference<span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{assistances.reference}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Montant d'assistance <span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6">{{assistances.montant_assistance}}<span></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Membre assistant<span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6">{{assistances.membre_assistant}}<span></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Cotisation <span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{assistances.cotisation}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Date d'assistance <span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{assistances.date_assistance}}</span>
+                                            </div>
+                                        </div>                                                                       
+                                    </div>                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
+
+{% endblock%}
