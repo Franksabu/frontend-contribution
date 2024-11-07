@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contribution, Cotisation
+from .models import Contribution, Cotisation, Detail_contribution, TypeCotisation
 from parametrage.nemero import random_reference
 
 
@@ -81,7 +81,7 @@ class ContributionForm(forms.ModelForm):
                 attrs={"placeholder": "référence...", "readonly": "readonly"}
             ),
             "montant": forms.NumberInput(
-                attrs={"class": "form-control", "placeholder": "Montant minimum..."}
+                attrs={"class": "form-control", "placeholder": "Montant ..."}
             ),
             "date_contrib": forms.DateInput(
                 attrs={"class": "form-control", "type": "date"}
@@ -89,8 +89,8 @@ class ContributionForm(forms.ModelForm):
             "membre": forms.Select(
                 attrs={"class": "form-control"}
             ),
-            "cotisation": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
+            "cotisation": forms.Select(
+                attrs={"class": "form-control"}
             )
         }
         labels = {
@@ -104,3 +104,56 @@ class ContributionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["reference"].initial = random_reference.new_numero("CONTRI")
+
+
+# --------------------Detail_contributionForm --------------------------------------#
+
+class Detail_contributionForm(forms.ModelForm):
+    class Meta:
+        model = Detail_contribution
+        fields = [
+            "montant_paye",
+            "cotisation",
+            "membre",
+        ]
+        exclude = ("date_create",)
+        widgets = {
+            "montant_paye": forms.NumberInput(
+                attrs={"class": "form-control", "placeholder": "Montant minimum..."}
+            ),
+            "membre": forms.Select(
+                attrs={"class": "form-control"}
+            ),
+            "cotisation": forms.Select(
+                attrs={"class": "form-control"}
+            ),
+        }
+        labels = {
+            "membre": "Membre",
+            "cotisation": "Cotisation",
+            "montant_paye": "Montant de contribution",
+        }
+
+# --------------------Type_cotisationForm --------------------------------------#
+
+
+class Type_cotisationForm(forms.ModelForm):
+    class Meta:
+        model = TypeCotisation
+        fields = [
+            "nom",
+            "montant_max_retrait",
+
+        ]
+        widgets = {
+            "nom": forms.NumberInput(
+                attrs={"class": "form-control", "placeholder": "Nom ..."}
+            ),
+            "montant_max_retrait": forms.NumberInput(
+                attrs={"class": "form-control", "placeholder": "Montant maximal a retrait..."}
+            )
+        }
+        labels = {
+            "nom": "Nom",
+            "montant_max_retrait": "Montant maximal retrait",
+        }

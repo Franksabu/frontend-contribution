@@ -1,0 +1,56 @@
+{% block scripts %} 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$(document).ready(function() {
+    $('.js-entity-create-form').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(), // Sérialise les données du formulaire          
+            success: function(data) {
+                if (data.form_is_valid){
+                    $('#modal-entity').modal('hide');  // Ferme la modal si vous utilisez une modal
+                    location.href = data.url_redirect;  // Redirection
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erreur",
+                        text: data.form_error
+                    });
+                }
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erreur",
+                    text: "une erreur est survenue lors de l'enregistrement !!!"
+                });
+            } 
+        });
+    });
+});
+</script>
+{% endblock %}
+
+<form id="contribution-form" action="{% url 'contribution_create' %}" method="post" class="js-entity-create-form">
+     {% csrf_token %}
+    <div class="modal-header">
+        <h5 class="modal-title">Formulairie pour ajouter la cotisation</h5>
+        <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">			       
+     {% include 'contribution_form.html' %}
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cencel</button>
+            </div>
+        </div>
+    </div>
+</form>

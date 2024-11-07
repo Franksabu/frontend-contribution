@@ -30,10 +30,12 @@
       <span class="nav-text">cotisation</span>
     </a>
                 <ul aria-expanded="false">
-                    <li><a href="{% url 'cotisation_list' %}">cotisation</a></li>
-                    <li><a href="{% url 'type_cotisation_list' %}">Type de cotisation</a></li>
-                    <li><a href="contribution.html">contribution</a></li>
-                    <li><a href="{% url 'detail_cotisation_list' %}">Detail pour le membre cotise</a></li>
+                    <li><a href="{% url 'cotisation_list' %}">cotisation</a></li> 
+                    {% comment %}                   
+                    <li><a href="{% url 'type_cotisation_list' %}">Type de cotisation</a></li>                    
+                    <li><a href="{% url 'contribution_list' %}">contribution</a></li>
+                    <li><a href="{% url 'detail_contribution_list' %}">Detail pour le membre cotise</a></li>
+                    {% endcomment %}   
                 </ul>
             </li>
             <li><a class="" href="{% url 'assistance_list'%}">

@@ -1,0 +1,26 @@
+{% load widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-xxl-12 col-sm-12">	
+        <div class="row"> 
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                    {{ form.membre.label_tag }}
+                    {% render_field form.membre class+="form-control form-control-sm" %}
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                    {{ form.cotisation.label_tag }}
+                    {% render_field form.cotisation  class+="form-control form-control-sm" %}
+               </div>
+            </div>	           
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                    <i class="text-danger">*</i>
+                    {{ form.montant_paye.label_tag }}
+                    {% render_field form.montant_paye  class+="form-control form-control-sm" %}
+                </div>            
+            </div>        
+       </div>									
+    </div>
+</div>
