@@ -13,5 +13,5 @@ urlpatterns = [
     path("type_cotisations/<int:pk>/", views.type_cotisation_detail, name="type_cotisation_detail"),
     path("detail_contributions/list/", views.detail_contribution_list, name="detail_contribution_list"),
     path("detail_contributions/create/", views.detail_contribution_create, name="detail_contribution_create"),
-    path("detail_contributions/<int:pk>/", views.detail_contribution_detail, name="detail_contribution_detail"),
+    path("detail_contributions_detail/<int:pk>/", views.detail_contribution_detail, name="detail_contribution_detail"),
 ]

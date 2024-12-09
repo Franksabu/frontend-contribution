@@ -105,10 +105,10 @@ $(document).ready(function() {
 				<div id="list-view" class="tab-pane fade active show col-lg-12">
 					<div class="card">
 						<div class="card-header">
-							<h4 class="card-title">Cotisations  </h4>
+							<h4 class="card-title">Contributions </h4>
 							<!-- <a href="add-professor.html" class="btn btn-primary">+ Ajoter le nouveau</a> -->
 							<button type="button" class="btn btn-primary js-create-entity" 
-							data-url="{% url 'cotisation_create' %}">
+							data-url="{% url 'contribution_create' %}">
 								+ Formulaire pour ajouter la contribution 
 							</button>
 						</div>
@@ -127,7 +127,7 @@ $(document).ready(function() {
 										</tr>
 									</thead>
 									<tbody>
-                                        {% for contribution in Contributions %}
+                                        {% for contribution in contributions %}
 										<tr>
 											<td><img class="rounded-circle" width="35" src="{% static 'images/profile/small/pic1.jpg' %}" alt=""></td>
 											<td>{{contribution.reference}}</td>
@@ -137,7 +137,7 @@ $(document).ready(function() {
 											<td>{{cotisation.montant}}</td>											
 											<td class="d-flex justify-content-end" >
 												<button  type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" data-target="#bd-example-modal-lg-up"><i class="la la-pencil"></i></button>												
-												<a href="{% url 'cotisation_detail' cotisation.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-folder-open"></i></a>												
+												<a href="{% url 'contribution_detail' contribution.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-folder-open"></i></a>												
 												<button type="button" class="btn btn-sm btn-danger deleteButton "><i class="la la-trash-o"></i></button>														
 											</td>												
 										</tr>
@@ -161,7 +161,7 @@ $(document).ready(function() {
 								  <div class="dropdown-menu dropdown-menu-right border py-0">
 									<div class="py-2">
 										<a class="dropdown-item">											
-											<button  type="button" href="{% url 'contribution' cont.id %}" class="btn btn-sm btn-primary" style="background: none; border: none; color: rgb(77, 84, 153); padding: 0; cursor: pointer;">Edit</button>
+											<button  type="button" href="{% url 'contribution_detail' cont.id %}" class="btn btn-sm btn-primary" style="background: none; border: none; color: rgb(77, 84, 153); padding: 0; cursor: pointer;">Edit</button>
 										</a>
 										<a class="dropdown-item">
 											<button type="button" class="btn btn-sm btn-danger  deleteButton" style="background: none; border: none; color: rgb(199, 88, 88); padding: 0; cursor: pointer;">supprimer</button>

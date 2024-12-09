@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from cotisation.models import Contribution
 from django.shortcuts import get_object_or_404
-from cotisation.forms import ContributionForm
+from cotisation.forms import ContributionForm, CotisationForm
 from django.template.loader import render_to_string
 from parametrage.operations import OperationsHelpers
 from django.urls import reverse
@@ -10,9 +10,9 @@ from django.urls import reverse
 
 def contribution_list(request):
     context = {
-        "contibutions": Contribution.objects.all(),
+        "contributions": Contribution.objects.all(),
     }
-    return render(request, "contibution_list.html", context)
+    return render(request, "contribution_list.html", context)
 
 
 def contribution_create(request):
@@ -29,6 +29,7 @@ def save_contribution_form(request, form, template_name, action):
             res = OperationsHelpers.execute_action(
                 request, action, form
             )
+            print(form)
             if len(res) == 0:
                 data["form_is_valid"] = True
                 data["html_content_list"] = render_to_string("contribution_list.html")
@@ -47,4 +48,4 @@ def save_contribution_form(request, form, template_name, action):
 
 def contribution_detail(request, pk):
     contribution = get_object_or_404(Contribution, pk=pk)
-    return render(request, "contribution_details.html", {"contribution": contribution})
+    return render(request, "contribution_detail.html", {"contribution": contribution})

@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 {% endblock %}
 
-{% block title %}Typede cotisation{% endblock %}
+{% block title %}Type de cotisation{% endblock %}
 
 {% block scripts %}
 <script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
@@ -114,8 +114,8 @@ document.querySelectorAll('.deleteButton').forEach(button => {
                                         <tr>
                                             <th></th>                                                                                 
                                             <th>Nom</th>                                            
-                                            <th>Montant maximal a retire</th>                                            
-                                            <th>Description</th>                                          
+                                            <th>Montant maximal a retire</th>                                  
+                                                                                    
                                             <th>Action</th>                                          
                                         </tr>
                                     </thead>
@@ -124,8 +124,8 @@ document.querySelectorAll('.deleteButton').forEach(button => {
                                         <tr>
                                             <td><img class="rounded-circle" width="35" src=" {% static 'images/profile/small/pic2.jpg' %}" alt=""></td>
                                             <td>{{type.nom}}</td>                                            
-                                            <td>{{type.montant_max_retrait}}</td>                                            
-                                            <td>{{type.description}}</td>
+                                            <td>{{type.montant_max_retrait}}</td>                                         
+                                           
                                             <td class="d-flex justify-content-end">
                                                 <button  type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" data-target="#bd-example-modal-lg-up" ><i class="la la-pencil"></i></button>
                                                 <a href="{% url 'type_cotisation_detail' type.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-eye"></i></a>
@@ -177,12 +177,8 @@ document.querySelectorAll('.deleteButton').forEach(button => {
                                             <li class="list-group-item px-0 d-flex justify-content-between">
                                                 <span class="mb-0">Montant max retrait :</span><strong>{{type.montant_max_retrait}}</strong>
                                             </li>                                           
-                                        </ul>										  
-                                        <ul class="list-group mb-3 list-group-flush">
-                                            <li class="list-group-item px-0 d-flex justify-content-between">
-                                                <span class="mb-0">Description :</span><strong>{{type.description}}</strong>
-                                            </li>                                           
-                                        </ul>
+                                        </ul>									  
+                                    
                                         <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="{% url 'type_cotisation_detail' type.id %}">Read More</a>
                                     </div>
                                 </div>

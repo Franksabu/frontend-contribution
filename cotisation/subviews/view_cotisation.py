@@ -10,7 +10,7 @@ from django.urls import reverse
 
 def cotisation_list(request):
     context = {
-        "cotisations": Cotisation.objects.all(),
+        "cotisations": Cotisation.objects.all()
     }
     return render(request, "cotisation_list.html", context)
 

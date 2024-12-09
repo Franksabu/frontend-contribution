@@ -2,17 +2,17 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(document).ready(function() {
-    $('.js-entity-create-form').submit(function(e) {
+    $('.js-entity-create-form1').submit(function(e) {
         e.preventDefault();
 
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
-            data: $(this).serialize(), // Sérialise les données du formulaire          
+            data: $(this).serialize(),          
             success: function(data) {
                 if (data.form_is_valid){
-                    $('#modal-entity').modal('hide');  // Ferme la modal si vous utilisez une modal
-                    location.href = data.url_redirect;  // Redirection
+                    $('#modal-entity').modal('hide');
+                    location.href = data.url_redirect;
                 }else{
                     Swal.fire({
                         icon: "error",
@@ -37,7 +37,7 @@ $(document).ready(function() {
 <form id="contribution-form" action="{% url 'contribution_create' %}" method="post" class="js-entity-create-form">
      {% csrf_token %}
     <div class="modal-header">
-        <h5 class="modal-title">Formulairie pour ajouter la cotisation</h5>
+        <h5 class="modal-title">Formulaire pour ajouter la cotisation</h5>
         <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
         </button>

@@ -42,10 +42,13 @@ INSTALLED_APPS = [
     "membre",
     "cotisation",
     "assistance",
+    "django_bootstrap5",
     "widget_tweaks",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -53,6 +56,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+# Configuration des origines autorisées
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    # Autres origines si nécessaire
 ]
 
 ROOT_URLCONF = "contribution.urls"
@@ -88,7 +98,7 @@ DATABASES = {
         "PASSWORD": "postgres",
         "HOST": "127.0.0.1",
         "PORT": "5432",
-    }
+    },
 }
 
 # DATABASES = {
@@ -133,16 +143,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATIC_URL = "/static/"
-MEDIA_URL = "images/"
-# Chemins supplémentaires où Django cherchera les fichiers statiques
+MEDIA_URL = "/media/"  # It's common to add a leading slash for MEDIA_URL
+
+# Paths where Django will search for static files
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Répertoire "static" à la racine du projet
-    # BASE_DIR / 'contribution/static',
+    BASE_DIR / "static",  # Directory "static" at the root of the project
+    # BASE_DIR / 'contribution/static',  # Uncomment if you have this directory
 ]
 
-# Dossier dans lequel tous les fichiers statiques seront collectés pour la production
+# Directory where all static files will be collected for production
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# Directory where uploaded media files will be stored
 MEDIA_ROOT = BASE_DIR / "images"
 
 # Default primary key field type

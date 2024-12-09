@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contribution, Cotisation, Detail_contribution, TypeCotisation
+from .models import Contribution, Cotisation, DetailContribution, TypeCotisation
 from parametrage.nemero import random_reference
 
 
@@ -110,7 +110,7 @@ class ContributionForm(forms.ModelForm):
 
 class Detail_contributionForm(forms.ModelForm):
     class Meta:
-        model = Detail_contribution
+        model = DetailContribution
         fields = [
             "montant_paye",
             "cotisation",
@@ -146,7 +146,7 @@ class Type_cotisationForm(forms.ModelForm):
 
         ]
         widgets = {
-            "nom": forms.NumberInput(
+            "nom": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "Nom ..."}
             ),
             "montant_max_retrait": forms.NumberInput(

@@ -13,24 +13,24 @@
 <script src="{% static 'js/plugins-init/datatables.init.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-$(document).ready(function() {
-    $('#modal-entity').submit(function(e) {
-        e.preventDefault();
+// $(document).ready(function() {
+//     $('#modal-entity').submit(function(e) {
+//         e.preventDefault();
 
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            success: function(data) {
-                $('#modal-entity').modal('hide');
-                alert(data.message);
-            },
-            error: function(xhr) {
-                alert('Erreur lors de la création de la cotisation : ' + xhr.responseJSON.errors);
-            }
-        });
-    });
-});
+//         $.ajax({
+//             type: 'POST',
+//             url: $(this).attr('action'),
+//             data: $(this).serialize(),
+//             success: function(data) {
+//                 $('#modal-entity').modal('hide');
+//                 alert(data.message);
+//             },
+//             error: function(xhr) {
+//                 alert('Erreur lors de la création de la cotisation : ' + xhr.responseJSON.errors);
+//             }
+//         });
+//     });
+// });
 
 $(document).ready(function() {
     document.querySelectorAll('.deleteButton').forEach(button => {
@@ -108,7 +108,7 @@ $(document).ready(function() {
 							<h4 class="card-title">Detail de contributions  </h4>
 							<!-- <a href="add-professor.html" class="btn btn-primary">+ Ajoter le nouveau</a> -->
 							<button type="button" class="btn btn-primary js-create-entity" 
-							data-url="{% url 'contribution_create' %}">
+							data-url="{% url 'detail_contribution_create' %}">
 								+ Formulaire pour ajouter la contribution 
 							</button>
 						</div>
@@ -136,7 +136,7 @@ $(document).ready(function() {
 											<td>{{cotisation.date_create}}</td>
 											<td class="d-flex justify-content-end" >
 												<button  type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" data-target="#bd-example-modal-lg-up"><i class="la la-pencil"></i></button>												
-												<a href="{% url 'cotisation_detail' cotisation.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-folder-open"></i></a>												
+												<a href="{% url 'detail_contribution_detail' detail.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-folder-open"></i></a>												
 												<button type="button" class="btn btn-sm btn-danger deleteButton "><i class="la la-trash-o"></i></button>														
 											</td>												
 										</tr>

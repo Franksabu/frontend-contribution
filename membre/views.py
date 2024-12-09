@@ -31,6 +31,29 @@ def membre_create(request):
     return save_membre_form(request, form, "membre_create.html", "create")
 
 
+def save_membre_form(request, form, template_name, action):
+    data = {}
+    if request.method == "POST":
+        if not form.is_valid():
+            data["form_is_valid"] = False
+        else:
+            res = OperationsHelpers.execute_action(request, action, form)
+            if len(res) == 0:
+                data["form_is_valid"] = True
+                data["html_content_list"] = render_to_string("membre_list.html")
+                data["url_redirect"] = reverse("membre_list")
+            else:
+                data["form_is_valid"] = False
+                data["form_error"] = res
+
+    else:
+
+        context = {"form": form}
+        print(form.errors)
+        data["html_form"] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
 def membre_update(request, pk):
     membre = get_object_or_404(Membre, pk=pk)
 
@@ -51,32 +74,6 @@ def membre_update(request, pk):
             return render(request, "membre_form.html", {"form": form})
 
     return render(request, "membre_update.html", {"form": form})
-
-
-def save_membre_form(request, form, template_name, action):
-    data = {}
-    if request.method == "POST":
-        if not form.is_valid():
-            data["form_is_valid"] = False
-        else:
-            res = OperationsHelpers.execute_action(
-                request, action, form
-            )
-            if len(res) == 0:
-                data["form_is_valid"] = True
-                data["html_content_list"] = render_to_string("membre_list.html")
-                data["url_redirect"] = reverse("membre_list")
-            else:
-                data["form_is_valid"] = False
-                data["form_error"] = res
-
-    else:
-
-        context = {"form": form}
-        data["html_form"] = render_to_string(
-            template_name, context, request=request
-        )
-    return JsonResponse(data)
 
 
 # @login_required
@@ -107,3 +104,8 @@ def membre_validate(request, pk):
         messages.success(request, "Membre validé avec succès.")
         return redirect("membre_list")
     return render(request, "membres/membre_confirm_validate.html", {"membre": membre})
+
+
+# vue pr index
+def index_view(request):
+    return render(request, "index.html")

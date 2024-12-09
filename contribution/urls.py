@@ -4,8 +4,8 @@ from .views import home
 
 urlpatterns = [
     path("", home, name="home"),
-    path("membres/", include("membre.urls")),
-    path("cotisations/", include("cotisation.urls")),
-    path("assistances/", include("assistance.urls")),
+    path("", include("membre.urls")),
+    path("cotisation/", include("cotisation.urls")),
+    path("", include("assistance.urls")),
     path("admin/", admin.site.urls),
 ]

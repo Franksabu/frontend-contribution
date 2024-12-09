@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from cotisation.models import Detail_contribution
+from cotisation.models import DetailContribution
 from django.shortcuts import get_object_or_404
 from cotisation.forms import Detail_contributionForm
 from django.template.loader import render_to_string
@@ -10,14 +10,14 @@ from django.urls import reverse
 
 def detail_contribution_list(request):
     context = {
-        "detail_contributions": Detail_contribution.objects.all(),
+        "detail_contributions": DetailContribution.objects.all(),
     }
     return render(request, "detail_contribution_list.html", context)
 
 
 def detail_contribution_create(request):
     form = Detail_contributionForm(request.POST) if request.method == "POST" else Detail_contributionForm()
-    return save_detail_contribution_form(request, form, "detail_Contribution.html", "create")
+    return save_detail_contribution_form(request, form, "detail_contribution_create.html", "create")
 
 
 def save_detail_contribution_form(request, form, template_name, action):
@@ -46,5 +46,5 @@ def save_detail_contribution_form(request, form, template_name, action):
 
 
 def detail_contribution_detail(request, pk):
-    detail_contribution = get_object_or_404(Detail_contribution, pk=pk)
+    detail_contribution = get_object_or_404(DetailContribution, pk=pk)
     return render(request, "detail_contribution_detail.html", {"detail_contribution": detail_contribution})
