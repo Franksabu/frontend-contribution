@@ -10,7 +10,7 @@
 {% block title %} membre{% endblock %}
 
 {% block scripts %} 
-
+<!-- <script src="{% static 'js/sweetalert.min.js' %}"></script> -->
 <script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'js/plugins-init/datatables.init.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -29,27 +29,22 @@
         // Désactiver le bouton et marquer comme en cours de chargement
         $button.prop('disabled', true).data('loading', true);
 
-       
         // Envoyer la requête AJAX
         $.ajax({
             type: "GET",
             url: url,
-            headers: {"X-CSRFToken": csrftoken},
             success: function(response) {
-                // Assurez-vous que response est correctement formaté
                 if (response && response.html_form) {
-                    // Injecter le contenu HTML dans la modal
                     $("#modal-entity .modal-content").html(response.html_form);
-                    // Afficher la modal
                     $("#modal-entity").modal("show");
                 } else {
-                    swal("Erreur", "Une erreur se produit lors du chargement du contenu du formulaire.", "error");
+                    console.log("Erreur", "Une erreur se produit lors du chargement du contenu du formulaire.", "error");
                 }
             },
             error: function(xhr, status, error) {
                 // Erreur de la requête AJAX
                 console.error("Erreur de requête:", xhr.responseText, status, error);
-                swal("Erreur", "Une erreur se produit lors du chargement du formulaire.", "error");
+                console.log("Erreur", "Une erreur se produit lors du chargement du formulaire.", "error");
             },
             complete: function() {
                 // Réactiver le bouton et réinitialiser le statut de chargement
@@ -175,10 +170,17 @@
                                             <td>{{ membre.get_type_id_display }}</td>
                                             <td>{{membre.numero_id}}</td>
                                             <td class="d-flex justify-content-end">
-                                                <button type="button" class="btn btn-primary js-update-entity" data-url="{% url 'membre_update' membre.id %}"><i class="la la-pencil"></i></button>
-                                                <!-- <button  type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" data-target="#bd-example-modal-lg-up" data-id="{{ membre.id }}" ><i class="la la-pencil"></i></button> -->
-                                                <a href="{% url 'membre_detail' membre.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-eye"></i></a>
-                                                <button type="button" class="btn-sm btn-danger deleteButton" data-id="{{ membre.id }}"><i class="la la-trash-o"></i></button>
+                                                <button type="button" 
+                                                        class="btn btn-primary js-update-entity" 
+                                                        data-url="{% url 'membre_update' membre.id %}">
+                                                        <i class="la la-pencil"></i>
+                                                </button>
+                                                <a href="{% url 'membre_detail' membre.id %}" class="btn btn-sm btn-success mr-1">
+                                                    <i class="la la-eye"></i>
+                                                </a>
+                                                <button type="button" class="btn-sm btn-danger deleteButton" data-id="{{ membre.id }}">
+                                                    <i class="la la-trash-o"></i>
+                                                </button>
                                             </td> 
                                         </tr>
                                     {% endfor %}

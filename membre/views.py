@@ -54,22 +54,55 @@ def save_membre_form(request, form, template_name, action):
     return JsonResponse(data)
 
 
+# def membre_update(request, id):
+#     membre = get_object_or_404(Membre, id=id)
+
+#     if request.method == "POST":
+#         form = MembreForm(request.POST, instance=membre)
+#         if form.is_valid():
+#             membre = form.save(commit=False)
+#             membre.date_update = timezone.now()
+#             membre.user_valide = request.user
+#             membre.save()
+#             messages.success(request, "Membre mis à jour avec succès.")
+#             return redirect("membre_list")
+#     else:
+#         form = MembreForm(instance=membre)
+#     print(form)
+
+#     return render(request, "membre_update.html", {"html_form": form, "membre": membre})
+
 def membre_update(request, id):
     membre = get_object_or_404(Membre, id=id)
 
     if request.method == "POST":
-        form = MembreForm(request.POST, instance=membre)        
+        form = MembreForm(request.POST, instance=membre)
         if form.is_valid():
             membre = form.save(commit=False)
             membre.date_update = timezone.now()
-            membre.user_validate = request.user
+            membre.user_valide = request.user
             membre.save()
-            messages.success(request, "Membre mis à jour avec succès.")
-            return redirect("membre_list")
+            return JsonResponse(
+                {"form_is_valid": True, "url_redirect": "/list/"}
+            )
+        else:
+            return JsonResponse(
+                {
+                    "form_is_valid": False,
+                    "form_error": "Le formulaire contient des erreurs.",
+                }
+            )
+
     else:
         form = MembreForm(instance=membre)
 
-    return render(request, "membre_update.html", {"form": form, "membre": membre})
+    # Rendre le formulaire en HTML partiel
+    html_form = render_to_string(
+        "membre_update.html",
+        {"form": form, "membre": membre},
+        request=request,
+    )
+    return JsonResponse({"html_form": html_form})
 
 
 # @login_required
