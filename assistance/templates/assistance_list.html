@@ -133,7 +133,7 @@ $(document).ready(function() {
                                                 <td>{{ assistance.date_assistance }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-end">
-                                                        <button type="button" class="btn btn-sm btn-primary mr-1"><i class="la la-pencil"></i></button>
+                                                        <button type="button" class="btn btn-sm btn-primary mr-1" ><i class="la la-pencil"></i></button>
                                                         <a href="{% url 'assistance_detail' assistance.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-eye"></i></a>															
                                                         <button type="button" class="btn btn-sm btn-danger deleteButton"><i class="la la-trash-o"></i></button>																
                                                     </div>
@@ -194,4 +194,5 @@ $(document).ready(function() {
 		</div>
 	</div>	
 </div>
+
 {% endblock %}

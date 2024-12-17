@@ -36,9 +36,9 @@ $(document).ready(function() {
 
 <form id="cotisation-form" action="{% url 'cotisation_create' %}" method="post" class="js-entity-create-form">
     {% csrf_token %}
-    <div class="modal-header">
-        <h5 class="modal-title">Formulairie pour ajouter la cotisation</h5>
-        <button type="button" class="close" data-dismiss="modal">
+    <div class="modal-header" style="background-color: #143b64;">
+        <h5 class="modal-title text-white">Formulairie pour ajouter la cotisation</h5>
+        <button type="button" class="close text-white" data-dismiss="modal">
             <span>&times;</span>
         </button>
     </div>

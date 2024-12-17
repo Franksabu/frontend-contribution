@@ -108,7 +108,7 @@ class ContributionForm(forms.ModelForm):
 
 # --------------------Detail_contributionForm --------------------------------------#
 
-class Detail_contributionForm(forms.ModelForm):
+class DetailContributionForm(forms.ModelForm):
     class Meta:
         model = DetailContribution
         fields = [
@@ -137,7 +137,7 @@ class Detail_contributionForm(forms.ModelForm):
 # --------------------Type_cotisationForm --------------------------------------#
 
 
-class Type_cotisationForm(forms.ModelForm):
+class TypecotisationForm(forms.ModelForm):
     class Meta:
         model = TypeCotisation
         fields = [

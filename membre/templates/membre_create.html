@@ -36,9 +36,9 @@ $(document).ready(function() {
 
 <form id="membre-form" action="{% url 'membre_create' %}" method="post" class="js-entity-create-form">
     {% csrf_token %}
-    <div class="modal-header">
-        <h5 class="modal-title">Formulaire pour ajouter un nouveau membre</h5>
-        <button type="button" class="close" data-dismiss="modal">
+    <div class="modal-header" style="background-color: #143b64;">
+        <h5 class="modal-title text-white" >Formulaire pour ajouter un nouveau membre</h5>
+        <button type="button" class="close text-white" data-dismiss="modal">
             <span>&times;</span>
         </button>
     </div>
@@ -48,7 +48,7 @@ $(document).ready(function() {
     <div class="modal-footer">                   
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                <button type="submit" class="btn btn-sm btn-primary">Créer</button>
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancel</button>
             </div>
         </div>                          

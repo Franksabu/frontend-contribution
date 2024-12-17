@@ -14,46 +14,96 @@
 <script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'js/plugins-init/datatables.init.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- <script>
-$(document).ready(function() {
-    document.querySelectorAll('.deleteButton').forEach(button => {        
-        button.onclick = function() {            
-            Swal.fire({
-                title: 'Êtes-vous sûr de vouloir supprimer cette ligne?',
-                text: 'Vous ne pourrez pas récupérer cette ligne!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Supprimer',
-                cancelButtonText: 'Annuler',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {               
-    
-                    fetch('/delete-file', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            Swal.fire('Fichier supprimé !', '', 'success');
-                        } else {
-                            Swal.fire('Erreur lors de la suppression du fichier !', '', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire('Erreur lors de la requête !', '', 'error');
-                    });
-    
-                } else if (result.isDismissed) {
-                    Swal.fire('Fichier non supprimé !');
+<script>
+    $(document).on('click', '.js-update-entity', function(e) {
+        e.preventDefault(); // Prévenir les actions par défaut
+        
+        var $button = $(this);
+        var url = $button.data('url');
+
+        // Vérifier si une requête est déjà en cours
+        if ($button.data('loading')) {
+            return;
+        }
+
+        // Désactiver le bouton et marquer comme en cours de chargement
+        $button.prop('disabled', true).data('loading', true);
+
+       
+        // Envoyer la requête AJAX
+        $.ajax({
+            type: "GET",
+            url: url,
+            headers: {"X-CSRFToken": csrftoken},
+            success: function(response) {
+                // Assurez-vous que response est correctement formaté
+                if (response && response.html_form) {
+                    // Injecter le contenu HTML dans la modal
+                    $("#modal-entity .modal-content").html(response.html_form);
+                    // Afficher la modal
+                    $("#modal-entity").modal("show");
+                } else {
+                    swal("Erreur", "Une erreur se produit lors du chargement du contenu du formulaire.", "error");
                 }
-            });
-        };
+            },
+            error: function(xhr, status, error) {
+                // Erreur de la requête AJAX
+                console.error("Erreur de requête:", xhr.responseText, status, error);
+                swal("Erreur", "Une erreur se produit lors du chargement du formulaire.", "error");
+            },
+            complete: function() {
+                // Réactiver le bouton et réinitialiser le statut de chargement
+                $button.prop('disabled', false).data('loading', false);
+            }
+        });
     });
-})
- </script>
+    
+    $(document).ready(function() {
+        document.querySelectorAll('.deleteButton').forEach(button => {
+            button.onclick = function() {
+                const membreId = this.dataset.id; // Récupère l'ID du membre à partir de l'attribut data-id
+    
+                Swal.fire({
+                    title: 'Êtes-vous sûr de vouloir supprimer cette ligne?',
+                    text: 'Vous ne pourrez pas récupérer cette ligne!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Supprimer',
+                    cancelButtonText: 'Annuler',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Envoi de la requête de suppression
+                        fetch(`/membre/delete/${membreId}/`, {  // Ajustez l'URL selon votre configuration
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'  // Ajoutez le token CSRF pour la sécurité
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire('Membre supprimé !', '', 'success').then(() => {
+                                    // Optionnel : Redirigez ou mettez à jour la page
+                                    window.location.reload(); // Recharge la page pour mettre à jour la liste
+                                });
+                            } else {
+                                Swal.fire('Erreur lors de la suppression du membre !', '', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Erreur lors de la requête !', '', 'error');
+                        });
+    
+                    } else if (result.isDismissed) {
+                        Swal.fire('Membre non supprimé !');
+                    }
+                });
+            };
+        });    
+    });
+    
+</script>
 {% endblock %}
 
 {% block content %}
@@ -107,8 +157,7 @@ $(document).ready(function() {
                                             <th>Telephone</th>
                                             <th>Email</th>
                                             <th>Type identifiant</th>
-                                            <th>Numero identifiant</th>
-                                            <th>Description</th>
+                                            <th>Numero identifiant</th>                                            
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -125,11 +174,11 @@ $(document).ready(function() {
                                             <td><a href="javascript:void(0);"><strong>{{membre.email}}</strong></a></td>						
                                             <td>{{ membre.get_type_id_display }}</td>
                                             <td>{{membre.numero_id}}</td>
-                                            <td>{{membre.description}}</td>
                                             <td class="d-flex justify-content-end">
-                                                <button  type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" data-target="#bd-example-modal-lg-up" ><i class="la la-pencil"></i></button>
+                                                <button type="button" class="btn btn-primary js-update-entity" data-url="{% url 'membre_update' membre.id %}"><i class="la la-pencil"></i></button>
+                                                <!-- <button  type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" data-target="#bd-example-modal-lg-up" data-id="{{ membre.id }}" ><i class="la la-pencil"></i></button> -->
                                                 <a href="{% url 'membre_detail' membre.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-eye"></i></a>
-                                                <button type="button" class="btn-sm btn-danger deleteButton"><i class="la la-trash-o"></i></button>
+                                                <button type="button" class="btn-sm btn-danger deleteButton" data-id="{{ membre.id }}"><i class="la la-trash-o"></i></button>
                                             </td> 
                                         </tr>
                                     {% endfor %}
@@ -190,5 +239,5 @@ $(document).ready(function() {
         </div>
     </div>  
 </div>
-{% include 'membre_update.html' %}
+
 {% endblock %}

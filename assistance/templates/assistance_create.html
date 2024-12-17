@@ -35,9 +35,9 @@ $(document).ready(function() {
 
 <form id="assistance-form" action="{% url 'assistance_create' %}" method="post" class="js-entity-create-form">
     {% csrf_token %}
-    <div class="modal-header">
-        <h5 class="modal-title">Formulairie pour ajouter l'assistance</h5>
-        <button type="button" class="close" data-dismiss="modal">
+    <div class="modal-header " style="background-color: #143b64;">
+        <h5 class="modal-title text-white">Formulairie pour ajouter l'assistance</h5>
+        <button type="button" class="close text-white" data-dismiss="modal">
             <span>&times;</span>
         </button>
     </div>

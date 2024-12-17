@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from cotisation.models import TypeCotisation
-from cotisation.forms import Type_cotisationForm
+from cotisation.forms import TypecotisationForm
 from parametrage.operations import OperationsHelpers
 from django.urls import reverse
 
@@ -16,9 +16,9 @@ def type_cotisation_list(request):
 
 def type_cotisation_create(request):
     form = (
-        Type_cotisationForm(request.POST)
+        TypecotisationForm(request.POST)
         if request.method == "POST"
-        else Type_cotisationForm()
+        else TypecotisationForm()
     )
     return save_type_cotisation_form(
         request, form, "type_cotisation_create.html", "create"
@@ -48,6 +48,42 @@ def save_type_cotisation_form(request, form, template_name, action):
         context = {"form": form}
         data["html_form"] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
+
+
+def type_cotisation_update(request, id):
+    type_cotisation = get_object_or_404(TypeCotisation, id=id)
+
+    if request.method == 'POST':
+        form = TypecotisationForm(request.POST, instance=type_cotisation)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({
+                'form_is_valid': True,
+                'url_redirect': reverse('type_cotisation_list')})
+            # return redirect('type_cotisation_list')
+        else:
+            return JsonResponse({
+                'form_is_valid': False,
+                'form_error': form.errors
+            })
+            # return render(request, 'cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
+    else:
+        form = TypecotisationForm(instance=type_cotisation)
+
+    return render(request, 'type_cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
+
+
+# @login_required
+def type_cotisation_delete(request, id):
+    type_cotisation = get_object_or_404(TypeCotisation, id=id)
+
+    if request.method == "POST":
+        type_cotisation.delete()
+        return JsonResponse({
+            "success": True,
+            "url_redirect": reverse("type_cotisation_list")  # Redirection après suppression
+        })
+    return JsonResponse({"success": False})
 
 
 def type_cotisation_detail(request, pk):

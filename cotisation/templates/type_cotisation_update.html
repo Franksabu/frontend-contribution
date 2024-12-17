@@ -6,7 +6,7 @@
             e.preventDefault();
             var $form = $(this); // Stockez une référence au formulaire
             // Désactiver le bouton pour éviter les soumissions multiples
-            $form.find('button[type="submit"]').prop('disabled', true);
+            // $form.find('button[type="submit"]').prop('disabled', true);
             $.ajax({
                 type: 'POST',
                 url: $form.attr('action'),
@@ -30,15 +30,15 @@
                         text: "une erreur est survenue lors de l'enregistrement !!!"
                     });
                 },
-                complete: function() {
-                $form.find('button[type="submit"]').prop('disabled', false); // Réactive le bouton
-                }
+                // complete: function() {
+                // $form.find('button[type="submit"]').prop('disabled', false); // Réactive le bouton
+                // }
             });
         });
     });
 </script>
 {% endblock %}
-<form action="{% url 'type_cotisation_create' %}" method="post" class="js-entity-create-form">
+<form action="{% url 'type_cotisation_update' type_cotisation.id %}" method="post" class="js-entity-update-form">
     {% csrf_token %}
     <div class="modal-header" style="background-color: #143b64;">
         <h5 class="modal-title text-white">Formulaire pour ajouter type de cotisation</h5>

@@ -35,7 +35,8 @@ def save_cotisation_form(request, form, template_name, action):
                 data["url_redirect"] = reverse("cotisation_list")
             else:
                 data["form_is_valid"] = False
-                data["form_error"] = res
+                data["form_error"] = form.errors
+                # data["form_error"] = res
 
     else:
         context = {"form": form}
@@ -43,6 +44,35 @@ def save_cotisation_form(request, form, template_name, action):
             template_name, context, request=request
         )  # Rendre le formulaire en cas de requête GET
     return JsonResponse(data)
+
+
+def cotisation_update(request, id):
+    cotisation = get_object_or_404(Cotisation, id=id)
+
+    if request.method == 'POST':
+        form = CotisationForm(request.POST, instance=cotisation)
+        if form.is_valid():
+            form.save()
+            return redirect('cotisation_list')
+        else:
+            return render(request, 'cotisation_update.html', {'form': form, 'cotisation': cotisation})
+    else:
+        form = CotisationForm(instance=cotisation)
+
+    return render(request, 'cotisation_update.html', {'form': form, 'cotisation': cotisation})
+
+
+# @login_required
+def cotisation_delete(request, id):
+    cotisation = get_object_or_404(Cotisation, id=id)
+
+    if request.method == "POST":
+        cotisation.delete()
+        return JsonResponse({
+            "success": True,
+            "url_redirect": reverse("cotisation_list")  # Redirection après suppression
+        })
+    return JsonResponse({"success": False})
 
 
 def cotisation_detail(request, pk):

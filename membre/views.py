@@ -54,11 +54,11 @@ def save_membre_form(request, form, template_name, action):
     return JsonResponse(data)
 
 
-def membre_update(request, pk):
-    membre = get_object_or_404(Membre, pk=pk)
+def membre_update(request, id):
+    membre = get_object_or_404(Membre, id=id)
 
     if request.method == "POST":
-        form = MembreForm(request.POST, instance=membre)
+        form = MembreForm(request.POST, instance=membre)        
         if form.is_valid():
             membre = form.save(commit=False)
             membre.date_update = timezone.now()
@@ -69,11 +69,7 @@ def membre_update(request, pk):
     else:
         form = MembreForm(instance=membre)
 
-        # Vérifiez si la requête est AJAX
-        if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            return render(request, "membre_form.html", {"form": form})
-
-    return render(request, "membre_update.html", {"form": form})
+    return render(request, "membre_update.html", {"form": form, "membre": membre})
 
 
 # @login_required
@@ -83,15 +79,18 @@ def membre_detail(request, pk):
 
 
 # @login_required
-def membre_delete(request, pk):
-    membre = get_object_or_404(Membre, pk=pk)
+def membre_delete(request, id):
+    membre = get_object_or_404(Membre, id=id)
+
     if request.method == "POST":
-        membre.date_delete = timezone.now()
-        membre.user_delete = request.user
-        membre.save()
-        messages.success(request, "Membre supprimé avec succès.")
-        return redirect("membre_list")
-    return render(request, "membres/membre_confirm_delete.html", {"membre": membre})
+        membre.delete()
+        return JsonResponse(
+            {
+                "success": True,
+                "url_redirect": reverse("membre_list"),  # Redirection après suppression
+            }
+        )
+    return JsonResponse({"success": False})
 
 
 # @login_required

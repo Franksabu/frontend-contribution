@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from cotisation.models import DetailContribution
 from django.shortcuts import get_object_or_404
-from cotisation.forms import Detail_contributionForm
+from cotisation.forms import DetailContributionForm
 from django.template.loader import render_to_string
 from parametrage.operations import OperationsHelpers
 from django.urls import reverse
@@ -16,7 +16,7 @@ def detail_contribution_list(request):
 
 
 def detail_contribution_create(request):
-    form = Detail_contributionForm(request.POST) if request.method == "POST" else Detail_contributionForm()
+    form = DetailContributionForm(request.POST) if request.method == "POST" else DetailContributionForm()
     return save_detail_contribution_form(request, form, "detail_contribution_create.html", "create")
 
 
@@ -43,6 +43,35 @@ def save_detail_contribution_form(request, form, template_name, action):
             template_name, context, request=request
         )  # Rendre le formulaire en cas de requête GET
     return JsonResponse(data)
+
+
+def detail_contibution_update(request, id):
+    detail_contribution = get_object_or_404(DetailContribution, id=id)
+
+    if request.method == 'POST':
+        form = DetailContributionForm(request.POST, instance=detail_contribution)
+        if form.is_valid():
+            form.save()
+            return redirect('cotisation_list')
+        else:
+            return render(request, 'cotisation_update.html', {'form': form, 'detail_contribution': detail_contribution})
+    else:
+        form = DetailContributionForm(instance=detail_contribution)
+
+    return render(request, 'detail_contribution_update.html', {'form': form, 'detail_contribution': detail_contribution})
+
+
+#  @login_required
+def detail_contribution_delete(request, id):
+    detail = get_object_or_404(DetailContribution, id=id)
+
+    if request.method == "POST":
+        detail.delete()
+        return JsonResponse({
+            "success": True,
+            "url_redirect": reverse("detail_contribution_list")
+        })
+    return JsonResponse({"success": False})
 
 
 def detail_contribution_detail(request, pk):

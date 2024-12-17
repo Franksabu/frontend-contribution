@@ -13,65 +13,50 @@
 <script src="{% static 'js/plugins-init/datatables.init.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-// $(document).ready(function() {
-//     $('#modal-entity').submit(function(e) {
-//         e.preventDefault();
-
-//         $.ajax({
-//             type: 'POST',
-//             url: $(this).attr('action'),
-//             data: $(this).serialize(),
-//             success: function(data) {
-//                 $('#modal-entity').modal('hide');
-//                 alert(data.message);
-//             },
-//             error: function(xhr) {
-//                 alert('Erreur lors de la création de la cotisation : ' + xhr.responseJSON.errors);
-//             }
-//         });
-//     });
-// });
-
-$(document).ready(function() {
-    document.querySelectorAll('.deleteButton').forEach(button => {
-    button.onclick = function() {
-        Swal.fire({
-            title: 'Êtes-vous sûr de vouloir supprimer ?',
-            text: 'Vous ne pourrez pas récupérer ce fichier imaginaire !',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Supprimer',
-            cancelButtonText: 'Annuler',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch('/delete-file', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        Swal.fire('Fichier supprimé !', '', 'success');
-                    } else {
-                        Swal.fire('Erreur lors de la suppression du fichier !', '', 'error');
-                    }
-                })
-                .catch(error => {
-                    Swal.fire('Erreur lors de la requête !', '', 'error');
+    $(document).ready(function() {
+        document.querySelectorAll('.deleteButton').forEach(button => {
+            button.onclick = function() {
+                const typeId = this.dataset.id; // Récupère l'ID du membre à partir de l'attribut data-id
+    
+                Swal.fire({
+                    title: 'Êtes-vous sûr de vouloir supprimer cette ligne?',
+                    text: 'Vous ne pourrez pas récupérer cette ligne!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Supprimer',
+                    cancelButtonText: 'Annuler',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Envoi de la requête de suppression
+						fetch(`/cotisation/detail_contributions/delete/${typeId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire('Membre supprimé !', '', 'success').then(() => {
+                                    // Optionnel : Redirigez ou mettez à jour la page
+                                    window.location.reload(); // Recharge la page pour mettre à jour la liste
+                                });
+                            } else {
+                                Swal.fire('Erreur lors de la suppression du membre !', '', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Erreur lors de la requête !', '', 'error');
+                        });
+    
+                    } else if (result.isDismissed) {
+                        Swal.fire('Membre non supprimé !');
+					}
                 });
-
-            } else if (result.isDismissed) {
-                Swal.fire('Fichier non supprimé !');
-            }
+            };
         });
-    };
-});
-
-
-})
-
+    })
 </script>
 {% endblock %}
 
@@ -131,13 +116,13 @@ $(document).ready(function() {
 											<td><img class="rounded-circle" width="35" src="{% static 'images/profile/small/pic1.jpg' %}" alt=""></td>
 										
 											<td>{{detail.membre}}</td>
-											<td>{{detail.cotisation}}</td>
+											<td>{{detail.cotisation}}</td>											
 											<td>{{detail.montant_paye}}</td>
 											<td>{{cotisation.date_create}}</td>
 											<td class="d-flex justify-content-end" >
-												<button  type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" data-target="#bd-example-modal-lg-up"><i class="la la-pencil"></i></button>												
+												<button  type="button" class="btn btn-sm btn-primary mr-1" data-url="{% url 'detail_contribution_update' %}" ><i class="la la-pencil"></i></button>												
 												<a href="{% url 'detail_contribution_detail' detail.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-folder-open"></i></a>												
-												<button type="button" class="btn btn-sm btn-danger deleteButton "><i class="la la-trash-o"></i></button>														
+												<button type="button" class="btn btn-sm btn-danger deleteButton " data-id="{{detail.id}}" ><i class="la la-trash-o"></i></button>														
 											</td>												
 										</tr>
                                         {% endfor %}												

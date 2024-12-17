@@ -46,6 +46,33 @@ def save_contribution_form(request, form, template_name, action):
     return JsonResponse(data)
 
 
+def contributions_update(request, id):
+    contribution = get_object_or_404(Contribution, id=id)
+    
+    if request.method == 'POST':
+        form = ContributionForm(request.POST, instance=contribution)
+        if form.is_valid():
+            form.save()
+            return redirect('contribution_list')
+    else:
+        form = ContributionForm(instance=contribution)
+
+    return render(request, 'contribution_update.html', {'form': form, 'contribution': contribution})
+
+
+#  @login_required
+def contribution_delete(request, id):
+    contribution = get_object_or_404(Contribution, id=id)
+
+    if request.method == "POST":
+        contribution.delete()
+        return JsonResponse({
+            "success": True,
+            "url_redirect": reverse("contribution_list")  # Redirection après suppression
+        })
+    return JsonResponse({"success": False})
+
+
 def contribution_detail(request, pk):
     contribution = get_object_or_404(Contribution, pk=pk)
     return render(request, "contribution_detail.html", {"contribution": contribution})

@@ -1,5 +1,7 @@
+from pyexpat.errors import messages
+from time import timezone
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
 from .models import Assistance
 from .forms import AssistanceForm
@@ -41,6 +43,22 @@ def save_assistance_form(request, form, template_name, action):
         data["html_form"] = render_to_string(template_name, context, request=request)
 
     return JsonResponse(data)
+
+
+def assistance_update(request, id):
+    assistance = get_object_or_404(Assistance, id=id)
+
+    if request.method == "POST":
+        form = AssistanceForm(request.POST, instance=assistance)        
+        if form.is_valid():
+            form.save(commit=False)            
+            form.save()
+            messages.success(request, "assistance mis à jour avec succès.")
+            return redirect("assistance_list")
+    else:
+        form = AssistanceForm(instance=assistance)
+
+    return render(request, "assistance_update.html", {"form": form, "assistance": "assistance"})
 
 
 def assistance_detail(request, pk):
