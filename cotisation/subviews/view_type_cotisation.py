@@ -5,6 +5,7 @@ from cotisation.models import TypeCotisation
 from cotisation.forms import TypecotisationForm
 from parametrage.operations import OperationsHelpers
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 def type_cotisation_list(request):
@@ -50,27 +51,61 @@ def save_type_cotisation_form(request, form, template_name, action):
     return JsonResponse(data)
 
 
-def type_cotisation_update(request, id):
+# def type_cotisation_update(request, id):
+#     type_cotisation = get_object_or_404(TypeCotisation, id=id)
+
+#     if request.method == 'POST':
+#         form = TypecotisationForm(request.POST, instance=type_cotisation)
+#         if form.is_valid():
+#             form.save()
+#             return JsonResponse({
+#                 'form_is_valid': True,
+#                 'url_redirect': reverse('type_cotisation_list')})
+#             # return redirect('type_cotisation_list')
+#         else:
+#             return JsonResponse({
+#                 'form_is_valid': False,
+#                 'form_error': form.errors
+#             })
+#             # return render(request, 'cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
+#     else:
+#         form = TypecotisationForm(instance=type_cotisation)
+
+#     return render(request, 'type_cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
+
+@login_required
+def cotisation_update(request, id):
     type_cotisation = get_object_or_404(TypeCotisation, id=id)
 
-    if request.method == 'POST':
+    if request.method == "POST":
+        print(request.POST)
         form = TypecotisationForm(request.POST, instance=type_cotisation)
         if form.is_valid():
-            form.save()
-            return JsonResponse({
-                'form_is_valid': True,
-                'url_redirect': reverse('type_cotisation_list')})
-            # return redirect('type_cotisation_list')
+            type_cotisation = form.save(commit=False)  # Ne sauvegardez pas encore
+            type_cotisation.user_valide = request.user  # Assignez l'utilisateur
+            type_cotisation.save()
+            if request.user.is_authenticated:
+                type_cotisation.user_valide = request.user
+            else:
+                # Gérer le cas où l'utilisateur n'est pas authentifié
+                return JsonResponse(
+                    {
+                        "form_is_valid": False,
+                        "form_error": "Vous devez être connecté pour effectuer cette action.",
+                    }
+                )
+
+            return JsonResponse({"form_is_valid": True, "url_redirect": "/cotisation/list/"})
         else:
-            return JsonResponse({
-                'form_is_valid': False,
-                'form_error': form.errors
-            })
-            # return render(request, 'cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
+            return JsonResponse(
+                {
+                    "form_is_valid": False,
+                    "form_error": "Le formulaire contient des erreurs.",
+                }
+            )
+
     else:
         form = TypecotisationForm(instance=type_cotisation)
-
-    return render(request, 'type_cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
 
 
 # @login_required
