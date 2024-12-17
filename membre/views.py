@@ -8,6 +8,7 @@ from django.utils import timezone
 from parametrage.enums import choix_sex, choix_identite
 from parametrage.operations import OperationsHelpers
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 # @login_required
@@ -72,6 +73,7 @@ def save_membre_form(request, form, template_name, action):
 
 #     return render(request, "membre_update.html", {"html_form": form, "membre": membre})
 
+@login_required
 def membre_update(request, id):
     membre = get_object_or_404(Membre, id=id)
 
@@ -82,9 +84,18 @@ def membre_update(request, id):
             membre.date_update = timezone.now()
             membre.user_valide = request.user
             membre.save()
-            return JsonResponse(
-                {"form_is_valid": True, "url_redirect": "/list/"}
-            )
+            if request.user.is_authenticated:
+                membre.user_valide = request.user
+            else:
+                # Gérer le cas où l'utilisateur n'est pas authentifié
+                return JsonResponse(
+                    {
+                        "form_is_valid": False,
+                        "form_error": "Vous devez être connecté pour effectuer cette action.",
+                    }
+                )
+
+            return JsonResponse({"form_is_valid": True, "url_redirect": "/membre/list/"})
         else:
             return JsonResponse(
                 {

@@ -27,18 +27,12 @@ class CotisationForm(forms.ModelForm):
             "reference": forms.TextInput(
                 attrs={"placeholder": "référence...", "readonly": "readonly"}
             ),
-            "type_cotisation": forms.Select(
-                attrs={"class": "form-control"}
-            ),
+            "type_cotisation": forms.Select(attrs={"class": "form-control"}),
             "montant_min": forms.NumberInput(
                 attrs={"class": "form-control", "placeholder": "Montant minimum..."}
             ),
-            "date_debut": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
-            ),
-            "date_fin": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
-            ),
+            "date_debut": forms.DateInput(),
+            "date_fin": forms.DateInput(),
             "periode": forms.Select(),
         }
         labels = {
@@ -57,16 +51,11 @@ class CotisationForm(forms.ModelForm):
 
 # --------------------ContributionForm --------------------------------------#
 
+
 class ContributionForm(forms.ModelForm):
     class Meta:
         model = Contribution
-        fields = [
-            "reference",
-            "montant",
-            "date_contrib",
-            "membre",
-            "cotisation"
-        ]
+        fields = ["reference", "montant", "date_contrib", "membre", "cotisation"]
         exclude = (
             "date_create",
             "date_validate",
@@ -86,19 +75,15 @@ class ContributionForm(forms.ModelForm):
             "date_contrib": forms.DateInput(
                 attrs={"class": "form-control", "type": "date"}
             ),
-            "membre": forms.Select(
-                attrs={"class": "form-control"}
-            ),
-            "cotisation": forms.Select(
-                attrs={"class": "form-control"}
-            )
+            "membre": forms.Select(attrs={"class": "form-control"}),
+            "cotisation": forms.Select(attrs={"class": "form-control"}),
         }
         labels = {
             "reference": "Référence",
             "membre": "Membre",
             "cotisation": "Cotisation",
             "date_contrib": "Date de contribution",
-            "montant": "Montant de contribution"
+            "montant": "Montant de contribution",
         }
 
     def __init__(self, *args, **kwargs):
@@ -107,6 +92,7 @@ class ContributionForm(forms.ModelForm):
 
 
 # --------------------Detail_contributionForm --------------------------------------#
+
 
 class DetailContributionForm(forms.ModelForm):
     class Meta:
@@ -121,18 +107,15 @@ class DetailContributionForm(forms.ModelForm):
             "montant_paye": forms.NumberInput(
                 attrs={"class": "form-control", "placeholder": "Montant minimum..."}
             ),
-            "membre": forms.Select(
-                attrs={"class": "form-control"}
-            ),
-            "cotisation": forms.Select(
-                attrs={"class": "form-control"}
-            ),
+            "membre": forms.Select(attrs={"class": "form-control"}),
+            "cotisation": forms.Select(attrs={"class": "form-control"}),
         }
         labels = {
             "membre": "Membre",
             "cotisation": "Cotisation",
             "montant_paye": "Montant de contribution",
         }
+
 
 # --------------------Type_cotisationForm --------------------------------------#
 
@@ -143,15 +126,17 @@ class TypecotisationForm(forms.ModelForm):
         fields = [
             "nom",
             "montant_max_retrait",
-
         ]
         widgets = {
             "nom": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "Nom ..."}
             ),
             "montant_max_retrait": forms.NumberInput(
-                attrs={"class": "form-control", "placeholder": "Montant maximal a retrait..."}
-            )
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Montant maximal a retrait...",
+                }
+            ),
         }
         labels = {
             "nom": "Nom",
