@@ -4,23 +4,23 @@
         <div class="row"> 
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="form-group">
-                    {{ form.membre.label_tag }}
-                    {% render_field form.membre class+="form-control form-control-sm" %}
+                    {{ form.contribution.label_tag }}
+                    {% render_field form.contribution class+="form-control form-control-sm" %}
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="form-group">
-                    {{ form.cotisation.label_tag }}
-                    {% render_field form.cotisation  class+="form-control form-control-sm" %}
-               </div>
-            </div>	           
+            </div>        
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="form-group">
                     <i class="text-danger">*</i>
                     {{ form.montant_paye.label_tag }}
                     {% render_field form.montant_paye  class+="form-control form-control-sm" %}
                 </div>            
-            </div>        
+            </div> 
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                    {{ form.date_contrib.label_tag }}
+                    {% render_field form.date_contrib  class+="form-control form-control-sm" %}
+               </div>
+            </div>	         
        </div>									
     </div>
 </div>

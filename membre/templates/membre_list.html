@@ -69,7 +69,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Envoi de la requête de suppression
-                        fetch(`/membre/delete/${membreId}/`, {  // Ajustez l'URL selon votre configuration
+                        fetch(`/membre/membre/delete/${membreId}/`, {  // Ajustez l'URL selon votre configuration
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -123,8 +123,8 @@
     <div class="row">
         <div class="col-lg-12">
             <ul class="nav nav-pills mb-3">
-                <li class="nav-item"><a href="#list-view" data-toggle="tab" class="nav-link btn-primary mr-1 show active">List View</a></li>
-                <li class="nav-item"><a href="#grid-view" data-toggle="tab" class="nav-link btn-primary">Grid View</a></li>
+                <li class="nav-item"><a href="#list-view" data-toggle="tab" class="nav-link btn-primary mr-1 show active" title="Voulez-vous voir la liste des membre deja enregistre ?">Tout le list</a></li>
+                <li class="nav-item"><a href="#grid-view" data-toggle="tab" class="nav-link btn-primary" title="Voulez-vous voir tous les details des membres ?">Tous les details</a></li>
             </ul>
         </div>
         <div class="col-lg-12">
@@ -134,7 +134,7 @@
                         <div class="card-header">
                           <h4 class="card-title">Membres</h4>
                           <button type="button" class="btn btn-primary js-create-entity"
-                          data-url="{% url 'membre_create' %}">
+                          data-url="{% url 'membre_create' %}" title="Voulez-vous creer un membre ?">
                               + Ajouter un nouveau membre
                           </button>
                         </div>
@@ -172,13 +172,16 @@
                                             <td class="d-flex justify-content-end">
                                                 <button type="button" 
                                                         class="btn btn-primary js-update-entity" 
-                                                        data-url="{% url 'membre_update' membre.id %}">
+                                                        data-url="{% url 'membre_update' membre.id %}"
+                                                        title="Voulez-vous modifier ?">
                                                         <i class="la la-pencil"></i>
                                                 </button>
-                                                <a href="{% url 'membre_detail' membre.id %}" class="btn btn-sm btn-success mr-1">
-                                                    <i class="la la-eye"></i>
+                                                <a href="{% url 'membre_detail' membre.id %}" class="btn btn-sm btn-success mr-1"
+                                                title="Voulez-vous voir le detail ?">
+                                                    <i class="la la-eye" ></i>
                                                 </a>
-                                                <button type="button" class="btn-sm btn-danger deleteButton" data-id="{{ membre.id }}">
+                                                <button type="button" class="btn-sm btn-danger deleteButton" data-id="{{ membre.id }}"
+                                                title="Voulez-vous supprimer vraiment ?">
                                                     <i class="la la-trash-o"></i>
                                                 </button>
                                             </td> 

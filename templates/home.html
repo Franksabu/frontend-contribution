@@ -6,291 +6,247 @@
 <!-- row -->
 <div class="container-fluid">				    
     <div class="row">
-        <div class="col-xl-6 col-xxl-6 col-sm-12">
+        <div class="col-xl-12 col-xxl-12 col-sm-12">
             <div class="row">
-                <div class="col-xl-6 col-xxl-6 col-sm-6">
+                <div class="col-xl-3 col-xxl-3 col-sm-3">
                     <div class="widget-stat card">
                         <div class="card-body">
-                            <h4 class="card-title">Total Students</h4>
-                            <h3>3280</h3>
-                            <div class="progress mb-2">
+                            <h1>Utilisateurs </h1>
+                            <h1 class="card-title">Nombre :  {{somme_users.total_users}}</h1> <br>
+                            
+                            <!-- <div class="progress mb-2">
                                 <div class="progress-bar progress-animated bg-primary" style="width: 80%"></div>
                             </div>
-                            <small>80% Increase in 20 Days</small>
+                            <small>80% Increase in 20 Days</small> -->
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-xxl-6 col-sm-6">
+                <div class="col-xl-3 col-xxl-3 col-sm-3">
                     <div class="widget-stat card">
                         <div class="card-body">
-                            <h4 class="card-title">New Students</h4>
-                            <h3>245</h3>
-                            <div class="progress mb-2">
+                            <h1 >Membres</h1>
+                            <h3 class="card-title">Nombre : {{somme_membres.total_membres}}</h3>
+                            <!-- <div class="progress mb-2">
                                 <div class="progress-bar progress-animated bg-warning" style="width: 50%"></div>
-                            </div>
-                            <small>50% Increase in 25 Days</small>
+                            </div> 
+                            <small>50% Increase in 25 Days</small> -->
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-xxl-6 col-sm-6">
+                <div class="col-xl-3 col-xxl-3 col-sm-3">
                     <div class="widget-stat card">
                         <div class="card-body">
-                            <h4 class="card-title">Total Course</h4>
-                            <h3>28</h3>
-                            <div class="progress mb-2">
+                            <h1>Contributions</h1><br>
+                            <h3 class="card-title">nombre total: {{somme_contributions.total_contributions}}</h3><br>
+                            <h4 class="card-title">total: </h4><h2>{{somme_contributions.total_montant_contributions}} FBU</h2>
+                            <!-- <div class="progress mb-2">
                                 <div class="progress-bar progress-animated bg-red" style="width: 76%"></div>
                             </div>
-                            <small>76% Increase in 20 Days</small>
+                            <small>76% Increase in 20 Days</small> -->
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-xxl-6 col-sm-6">
+                <div class="col-xl3 col-xxl-3 col-sm-3">
                     <div class="widget-stat card">
                         <div class="card-body">
-                            <h4 class="card-title">Fees Collection</h4>
-                            <h3>25160$</h3>
-                            <div class="progress mb-2">
+                            <h1>Assistances</h1><br>
+                            <h3 class="card-title">Nombre total: {{somme_assistances.total_assistances}}</h3><br>
+                            <h4 class="card-title">total: </h4><h2>{{somme_assistances.total_montant_assistances}} FBU</h2>
+                            <!-- <div class="progress mb-2">
                                 <div class="progress-bar progress-animated bg-success" style="width: 30%"></div>
                             </div>
-                            <small>30% Increase in 30 Days</small>
+                            <small>30% Increase in 30 Days</small> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>					
-        <div class="col-xl-6 col-xxl-6 col-sm-12">
+        <!-- <div class="col-xl-6 col-xxl-6 col-sm-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Income/Expense Report</h3>
                 </div>
                 <div class="card-body">
                         <div id="morris_bar_2" class="morris_chart_height"></div>
+                        <script>
+                            var data = [
+                                { label: "Assistance", value: {{ total_assistance }} },
+                                { label: "Contributions", value: {{ total_contribution }} },
+                                { label: "Cotisations", value: {{ total_cotisation }} },
+                                { label: "Membres", value: {{ total_membre }} },
+                                { label: "Users", value: {{ total_user }} }
+                            ];
+                        
+                            new Morris.Bar({
+                                element: 'morris_chart',
+                                data: data,
+                                xkey: 'label',
+                                ykeys: ['value'],
+                                labels: ['Total'],
+                            });
+                        </script>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-xl-4 col-lg-4 col-xxl-4 col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Professors List</h4>
+                    <h4 class="card-title">Liste des utilisateurs</h4>
                 </div>
                 <div class="card-body">
+                    {% for user in user_all %}
                     <div class="media mb-3 align-items-center border-bottom pb-3">
                         <img class="mr-3 rounded-circle" alt="image" width="50" src="{% static 'images/profile/education/pic1.jpg' %}">
                         <div class="media-body">
-                            <h5 class="mb-0 text-pale-sky">Theodore Handle <small class="text-muted">( B.Com )</small></h5>
-                            <small class="text-primary mb-0">Available</small>
+                            {% if user.first_name or user.last_name %}
+                            <h5 class="mb-0 text-pale-sky">{{user.first_name}} {{user.last_name}}<small class="text-muted">( {{user.is_active}} )</small></h5><br>
+                             {% else %}
+                             <h5 class="mb-0 text-pale-sky">{{user.username}}<small class="text-muted">( {{user.is_active}} )</small></h5><br>
+                             {% endif %}
+                             <small >Email : </small><small class="text-primary mb-0"> {{user.email}}</small><br>
+                             <small >Date de creation:</small><small class="text-primary mb-0"> {{user.date_joined}}</small>
                         </div>
                     </div>
-                    <div class="media mb-3 align-items-center border-bottom pb-3">
-                        <img class="mr-3 rounded-circle" alt="image" width="50" src="{% static 'images/profile/education/pic2.jpg' %}">>
-                        <div class="media-body">
-                            <h5 class="mb-0 text-pale-sky">Bess Willis <small class="text-muted">( M.Com )</small></h5>
-                            <small class="text-danger mb-0">Not Available</small>
-                        </div>
-                    </div>
-                    <div class="media mb-3 align-items-center border-bottom pb-3">
-                        <img class="mr-3 rounded-circle" alt="image" width="50" src="{% static 'images/profile/education/pic3.jpg' %}">>
-                        <div class="media-body">
-                            <h5 class="mb-0 text-pale-sky">James Jones <small class="text-muted">( M.Tach  )</small></h5>
-                            <small class="text-primary mb-0">Available</small>
-                        </div>
-                    </div>
-                    <div class="media mb-3 align-items-center border-bottom pb-3">
-                        <img class="mr-3 rounded-circle" alt="image" width="50" src="{% static 'images/profile/education/pic4.jpg' %}">>
-                        <div class="media-body">
-                            <h5 class="mb-0 text-pale-sky">Smith Watson <small class="text-muted">( B.Tach  )</small></h5>
-                            <small class="text-danger mb-0">Not Available</small>
-                        </div>
-                    </div>
-                    <div class="media mb-2 align-items-center border-bottom pb-3">
-                        <img class="mr-3 rounded-circle" alt="image" width="50" src="{% static 'images/profile/education/pic5.jpg' %}">>
-                        <div class="media-body">
-                            <h5 class="mb-0 text-pale-sky">Morese Sharpe <small class="text-muted">( B.A, M.A )</small></h5>
-                            <small class="text-primary mb-0">Available</small>
-                        </div>
-                    </div>
+                    {% endfor %}
                     <div class="text-center pt-3">
-                        <a href="javascript:void(0);" class="btn btn-primary btn-rounded btn px-5 btn-lg">View All</a>
+                        {% if request.user.is_staff or request.user.is_superuser %}
+                            <button type="button" class="btn btn-primary btn-rounded btn px-5 btn-lg" data-toggle="modal" data-target="#userModal" onclick="showAccessMessage(true)" title="Oui, Vous etes autorises de voir ">List des utilisateurs</button>
+                        {% else %}
+                            <span class="btn btn-secondary btn-rounded btn px-5 btn-lg" onclick="showAccessMessage(false)" title="Non, Vous n'etes pas autorises de voir" >Accès refusé</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- -----liste des contribution et des assistances------ -->
+
         <div class="col-xl-8 col-lg-8 col-xxl-8 col-md-12">
-            <div class="card">
+            <div class="card profile-tab">
                 <div class="card-header">
-                    <h4 class="card-title">Student List</h4>
+                    <h4 class="card-title">Informations pour <i style="color: blue;">Liste des assistances</i> et  <i style="color: rgb(231, 56, 129);">Liste des contributions</i> </h4>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive recentOrderTable">
-                        <table class="table verticle-middle table-responsive-md">
-                            <thead>
-                                <tr>
-                                    <th scope="col">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkAll">
-                                            <label class="custom-control-label" for="checkAll"></label>
-                                        </div>
-                                    </th>
-                                    <th scope="col">Student Name</th>
-                                    <th scope="col">Assigned Coach</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox2">
-                                            <label class="custom-control-label" for="checkbox2"></label>
-                                        </div>
-                                    </td>
-                                    <td>Angelica Ramos</td>
-                                    <td>Ashton Cox</td>
-                                    <td>12 August 2020</td>
-                                    <td>10:15</td>
-                                    <td>
-                                        <div class="dropdown custom-dropdown mb-0">
-                                            <div data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox3">
-                                            <label class="custom-control-label" for="checkbox3"></label>
-                                        </div>
-                                    </td>
-                                    <td>Bradley Greer</td>
-                                    <td>Brenden Wagner</td>
-                                    <td>11 July 2020</td>
-                                    <td>10:00</td>
-                                    <td>
-                                        <div class="dropdown custom-dropdown mb-0">
-                                            <div data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox4">
-                                            <label class="custom-control-label" for="checkbox4"></label>
-                                        </div>
-                                    </td>
-                                    <td>Cedric Kelly</td>
-                                    <td>Brielle Williamson</td>
-                                    <td>10 May 2020</td>
-                                    <td>09:45</td>
-                                    <td>
-                                        <div class="dropdown custom-dropdown mb-0">
-                                            <div data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox5">
-                                            <label class="custom-control-label" for="checkbox5"></label>
-                                        </div>
-                                    </td>
-                                    <td>Caesar Vance</td>
-                                    <td>Herrod Chandler</td>
-                                    <td>09 April 2020</td>
-                                    <td>09:30</td>
-                                    <td>
-                                        <div class="dropdown custom-dropdown mb-0">
-                                            <div data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox6">
-                                            <label class="custom-control-label" for="checkbox6"></label>
-                                        </div>
-                                    </td>
-                                    <td>Rhona Davidson</td>
-                                    <td>Sonya Frost</td>
-                                    <td>08 March 2020</td>
-                                    <td>09:15</td>
-                                    <td>
-                                        <div class="dropdown custom-dropdown mb-0">
-                                            <div data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox7">
-                                            <label class="custom-control-label" for="checkbox7"></label>
-                                        </div>
-                                    </td>
-                                    <td>Bradley Greer</td>
-                                    <td>Brenden Wagner</td>
-                                    <td>11 July 2020</td>
-                                    <td>10:00</td>
-                                    <td>
-                                        <div class="dropdown custom-dropdown mb-0">
-                                            <div data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="card-body custom-tab-1">
+                    <ul class="nav nav-tabs mb-3">
+                        <li class="nav-item"><a href="#my-posts1" data-toggle="tab" class="nav-link pb-2 active show">Contributions</a></li>
+                        <li class="nav-item"><a href="#about-me1" data-toggle="tab" class="nav-link pb-2">Assistances</a></li>                  
+                     </ul> 
+                    <div class="tab-content">
+                        <div id="my-posts1" class="tab-pane fade active show">
+                            <div class="table-responsive recentOrderTable">
+                                <table class="table verticle-middle table-responsive-md">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="checkAll">
+                                                    <label class="custom-control-label" for="checkAll"></label>
+                                                </div>
+                                            </th>
+                                            <th scope="col">Nom d'un membre</th>
+                                            <th scope="col">Type cotisation</th>
+                                            <th scope="col">Contribution</th>
+                                            <th scope="col">Date de contribution</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for contribution in contribution_all %}
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="checkbox2">
+                                                    <label class="custom-control-label" for="checkbox2"></label>
+                                                </div>
+                                            </td>
+                                            <td>{{contribution.membre}}</td>
+                                            <td>{{contribution.cotisation.type_cotisation}}</td>
+                                            <td>{{ contribution.montant }}</td>
+                                            <td>{{ contribution.date_contrib }}</td>
+                                            
+                                            <td>
+                                                {% if request.user.is_staff or request.user.is_superuser %}
+                                                <div class="dropdown custom-dropdown mb-0">
+                                                    <div data-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="{% url 'contribution_list' %}">list</a>
+                                                        <a class="dropdown-item text-danger" href="{% url 'home' %}">Cancel</a>
+                                                    </div>                                                     
+                                                </div>
+                                                {% else %} 
+                                                <span class="btn btn-primary btn-rounded btn px-5 btn-lg" onclick="showAccessMessage(false)" title="Non, Vous n'etes pas autorises de voir" >Accès refusé</span>                                                                                       
+                                                {% endif %}
+                                            </td>                                                  
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="about-me1" class="tab-pane fade">
+                            <div class="table-responsive recentOrderTable">
+                                <table class="table verticle-middle table-responsive-md">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="checkAll">
+                                                    <label class="custom-control-label" for="checkAll"></label>
+                                                </div>
+                                            </th>
+                                            <th scope="col">Nom d'un membre</th>
+                                            <th scope="col">Type cotisation</th>
+                                            <th scope="col">Assistance</th>
+                                            <th scope="col">Date d'assistance</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for assistance in assistance_all %}
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="checkbox2">
+                                                    <label class="custom-control-label" for="checkbox2"></label>
+                                                </div>
+                                            </td>
+                                            <td>{{assistance.membre_assistant}}</td>
+                                            <td>{{assistance.cotisation.type_cotisation}}</td>
+                                            <td>{{ assistance.montant_assistance }}</td>
+                                            <td>{{ assistance.date_assistance }}</td>
+                                            
+                                            <td>
+                                                {% if request.user.is_staff or request.user.is_superuser %}
+                                                <div class="dropdown custom-dropdown mb-0">
+                                                    <div data-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="{% url 'assistance_list' %}">list</a>
+                                                        <a class="dropdown-item" href="{% url 'assistance_detail' assistance.pk %}">Details</a>
+                                                        <a class="dropdown-item text-danger" href="{% url 'home' %}">Cancel</a>
+                                                    </div>
+                                                </div>
+                                                {% else %} 
+                                                <span class="btn btn-primary btn-rounded btn px-5 btn-lg" onclick="showAccessMessage(false)" title="Non, Vous n'etes pas autorises de voir" >Accès refusé</span>                                                                                       
+                                                {% endif %}
+                                            </td>                                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-xxl-4 col-md-12">
+        </div>        
+        
+        <!-- -----Fin sur la liste des contribution et des assistances------ -->
+        
+         <!-- <div class="col-xl-4 col-lg-4 col-xxl-4 col-md-12">
             <div class="card">
                 <div class="card-header">    
                     <h4 class="card-title">Gold medal</h4>
@@ -370,18 +326,17 @@
                     <span class="peity-line-3" data-width="100%">3,8,3,7,8,6,3,4,7,3,7,9,6,3,7,6,7,3,4,2</span>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-xl-12 col-lg-12 col-xxl-12 col-md-12">
             <div class="card profile-tab">
                 <div class="card-header">
-                    <h4 class="card-title">Salary Status</h4>
+                    <h4 class="card-title">Contributions/Assistances et Status <i style="color: blue;">Paye Termine</i> ou  <i style="color: rgb(231, 56, 129);">Paye Non Termine</i> </h4>
                 </div>
                 <div class="card-body custom-tab-1">
                     <ul class="nav nav-tabs mb-3">
-                        <li class="nav-item"><a href="#my-posts" data-toggle="tab" class="nav-link pb-2 active show">Professors</a></li>
-                        <li class="nav-item"><a href="#about-me" data-toggle="tab" class="nav-link pb-2">Librarian</a></li>
-                        <li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link pb-2">Other</a></li>
-                    </ul>
+                        <li class="nav-item"><a href="#my-posts" data-toggle="tab" class="nav-link pb-2 active show">Contributions</a></li>
+                        <li class="nav-item"><a href="#about-me" data-toggle="tab" class="nav-link pb-2">Assistances</a></li>                  
+                     </ul> 
                     <div class="tab-content">
                         <div id="my-posts" class="tab-pane fade active show">
                             <div class="table-responsive">
@@ -389,54 +344,46 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Montant Paye</th>
+                                            <th scope="col">Montant Min</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Ammount</th>
-                                            <th scope="col">Transaction ID</th>
+                                            <th scope="col">Action</th>
+                                            
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody>                                 
+                                        {% for item in contributions_data %}                                       
                                         <tr>
                                             <td><img src="{% static 'images/profile/education/pic1.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Angelica Ramos</td>
-                                            <td><span class="badge badge-rounded badge-success">Paid</span></td>
-                                            <td>12 August 2020</td>
-                                            <td>$100</td>
-                                            <td>#42317</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic2.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Bradley Greer</td>
-                                            <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                            <td>11 July 2020</td>
-                                            <td>$200</td>
-                                            <td>#54682</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic3.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Cedric Kelly</td>
-                                            <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                            <td>10 May 2020</td>
-                                            <td>$400</td>
-                                            <td>#57894</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic4.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Caesar Vance</td>
-                                            <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                            <td>09 April 2020</td>
-                                            <td>$300</td>
-                                            <td>#57864</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic5.jpg'%}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Rhona Davidson</td>
-                                            <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                            <td>08 March 2020</td>
-                                            <td>$500</td>
-                                            <td>#56387</td>
-                                        </tr>
+                                            <td>{{ item.membre }}</td>                         
+                                                
+                                                <td>{{item.montant}}</td>
+                                                <td>{{item.montant_min}}</td>
+                                                {% if item.is_valid %}
+                                                <td><span class="badge badge-rounded badge-success">Termine</span></td>
+                                                {% else %}
+                                                <td><span class="badge badge-rounded badge-danger">Pas Termine</span></td>
+                                                {% endif %}                         
+                                            <td>{{item.date_contrib}}</td> 
+                                            <td>
+                                                {% if request.user.is_staff or request.user.is_superuser %}
+                                                <div class="dropdown custom-dropdown mb-0">
+                                                    <div data-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="{% url 'contribution_list' %}">list</a>                                                       
+                                                        <a class="dropdown-item text-danger" href="{% url 'home' %}">Cancel</a>
+                                                    </div>
+                                                </div>
+                                                {% else %} 
+                                                <span class="btn btn-primary btn-rounded btn px-5 btn-lg" onclick="showAccessMessage(false)" title="Non, Vous n'etes pas autorises de voir" >Accès refusé</span>                                                                                       
+                                                {% endif %}
+                                            </td>                                                                                                                               
+                                        </tr> 
+                                        {% endfor %}                        
                                     </tbody>
                                 </table>
                             </div>
@@ -447,112 +394,46 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Montant Paye</th>
+                                            <th scope="col">Montant Min</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Ammount</th>
-                                            <th scope="col">Transaction ID</th>
+                                            <th scope="col">Action</th>
+                                            
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody>                                 
+                                        {% for item in assistance_data %}                                       
                                         <tr>
-                                            <td><img src="{% static 'images/profile/education/pic6.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Angelica Ramos</td>
-                                            <td><span class="badge badge-rounded badge-success">Paid</span></td>
-                                            <td>12 August 2020</td>
-                                            <td>$100</td>
-                                            <td>#42317</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic7.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Bradley Greer</td>
-                                            <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                            <td>11 July 2020</td>
-                                            <td>$200</td>
-                                            <td>#54682</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic8.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Cedric Kelly</td>
-                                            <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                            <td>10 May 2020</td>
-                                            <td>$400</td>
-                                            <td>#57894</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic10.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Caesar Vance</td>
-                                            <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                            <td>09 April 2020</td>
-                                            <td>$300</td>
-                                            <td>#57864</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic9.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Rhona Davidson</td>
-                                            <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                            <td>08 March 2020</td>
-                                            <td>$500</td>
-                                            <td>#56387</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div id="profile-settings" class="tab-pane fade">
-                            <div class="table-responsive">
-                                <table class="table table-responsive-md">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Ammount</th>
-                                            <th scope="col">Transaction ID</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic5.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Angelica Ramos</td>
-                                            <td><span class="badge badge-rounded badge-success">Paid</span></td>
-                                            <td>12 August 2020</td>
-                                            <td>$100</td>
-                                            <td>#42317</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic8.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Bradley Greer</td>
-                                            <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                            <td>11 July 2020</td>
-                                            <td>$200</td>
-                                            <td>#54682</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic6.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Cedric Kelly</td>
-                                            <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                            <td>10 May 2020</td>
-                                            <td>$400</td>
-                                            <td>#57894</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic2.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Caesar Vance</td>
-                                            <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                            <td>09 April 2020</td>
-                                            <td>$300</td>
-                                            <td>#57864</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="{% static 'images/profile/education/pic7.jpg' %}" class="rounded-circle" width="35" alt=""></td>
-                                            <td>Rhona Davidson</td>
-                                            <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                            <td>08 March 2020</td>
-                                            <td>$500</td>
-                                            <td>#56387</td>
-                                        </tr>
+                                            <td><img src="{% static 'images/profile/education/pic1.jpg' %}" class="rounded-circle" width="35" alt=""></td>
+                                            <td>{{ item.membre_assistant }}</td>                         
+                                                
+                                                <td>{{item.montant_assistance}}</td>
+                                                <td>{{item.montant_min}}</td>
+                                                {% if item.is_valid_ass %}
+                                                <td><span class="badge badge-rounded badge-success">Termine</span></td>
+                                                {% else %}
+                                                <td><span class="badge badge-rounded badge-danger">Pas Termine</span></td>
+                                                {% endif %}                         
+                                            <td>{{item.date_assistance}}</td> 
+                                            <td>
+                                                {% if request.user.is_staff or request.user.is_superuser %}
+                                                <div class="dropdown custom-dropdown mb-0">
+                                                    <div data-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="{% url 'contribution_list' %}">list</a>                                                       
+                                                        <a class="dropdown-item text-danger" href="{% url 'home' %}">Cancel</a>
+                                                    </div>
+                                                </div>
+                                                {% else %} 
+                                                <span class="btn btn-primary btn-rounded btn px-5 btn-lg" onclick="showAccessMessage(false)" title="Non, Vous n'etes pas autorises de voir" >Accès refusé</span>                                                                                       
+                                                {% endif %}
+                                            </td>                                                                                                                               
+                                        </tr> 
+                                        {% endfor %}                        
                                     </tbody>
                                 </table>
                             </div>
@@ -563,5 +444,60 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div div class="modal-dialog " role="document" style="max-width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header" style="color: rgb(101, 105, 105);">
+                <h5 class="modal-title" id="userModalLabel">Liste des Utilisateurs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-hover  ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Dernière connexion</th>
+                            <th>Date d'inscription</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in user_all %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email|default:"aucun email" }}</td>
+                            <td>{{ user.first_name|default:"aucun prenom" }}</td>
+                            <td>{{ user.last_name|default:"aucun nom" }}</td>
+                            <td>{{ user.last_login|default:"aucun login" }}</td>
+                            <td>{{ user.date_joined|default:"aucun login" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer" style="background-color: #dff0f7;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>    
+    function showAccessMessage(isAuthorized) {
+        if (isAuthorized) {
+            alert("Vous êtes autorisé à voir la liste des utilisateurs.");
+            // Chargez les données utilisateur si nécessaire
+            loadUserData(user.id);
+        } else {
+            alert("Vous n'êtes pas autorisé à voir cette liste.");
+        }
+    }    
+</script>
 
 {% endblock %}

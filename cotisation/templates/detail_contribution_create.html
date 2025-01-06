@@ -5,10 +5,13 @@ $(document).ready(function() {
     $('.js-entity-create-form').submit(function(e) {
         e.preventDefault();
 
+        const $submitButton = $(this).find('button[type="submit"]');
+        $submitButton.prop('disabled', true);
+
         $.ajax({
             type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(), // Sérialise les données du formulaire          
+            url: $submitButton.attr('action'),
+            data: $this.serialize(), // Sérialise les données du formulaire          
             success: function(data) {
                 if (data.form_is_valid){
                     $('#modal-entity').modal('hide');  // Ferme la modal si vous utilisez une modal
@@ -27,14 +30,17 @@ $(document).ready(function() {
                     title: "Erreur",
                     text: "une erreur est survenue lors de l'enregistrement !!!"
                 });
-            } 
+            },
+            complete: function() {
+                $submitButton.prop('disabled', false); // Réactiver le bouton
+            }
         });
     });
 });
 </script>
 {% endblock %}
 
-<form id="contribution-form" action="{% url 'detail_contribution_create' %}" method="post" class="js-entity-create-form">
+<form id="contribution-form" action="{% url 'detail_contribution_create' contribution.id %}" method="post" class="js-entity-create-form">
     {% csrf_token %}
     <div class="modal-header">
         <h5 class="modal-title">Formulairie pour ajouter la cotisation</h5>

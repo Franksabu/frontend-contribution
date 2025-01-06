@@ -18,8 +18,9 @@ urlpatterns = [
     path("type_cotisation/delete/<int:id>/", views.type_cotisation_delete, name="type_cotisation_delete"),
     path("type_cotisation/update/<int:id>/", views.type_cotisation_update, name="type_cotisation_update"),
     path("type_cotisations/detail/<int:pk>/", views.type_cotisation_detail, name="type_cotisation_detail"),
-    path("detail_contributions/list/", views.detail_contribution_list, name="detail_contribution_list"),
-    path("detail_contributions/create/", views.detail_contribution_create, name="detail_contribution_create"),
-    path("detail_contributions_detail/<int:pk>/", views.detail_contribution_detail, name="detail_contribution_detail"),
-    path("detail_contributions/delete/<int:id>/", views.detail_contribution_delete, name="detail_contribution_delete"),
+    path("detail_contributions/list/<int:id>/", views.detail_contribution_list, name="detail_contribution_list"),
+    path("detail_contributions/create/<int:id>/", views.detail_contribution_create, name="detail_contribution_create"),
+    # path("detail_contributions_detail/<int:contri_id>/<int:id>/", views.detail_contribution_detail, name="detail_contribution_detail"),
+    path("detail_contributions/delete/<int:contri_id>/<int:id>/", views.detail_contribution_delete, name="detail_contribution_delete"),
+    path("detail_contributions/update/<int:contri_id>/<int:id>/", views.detail_contribution_update, name="detail_contribution_update"),
 ]

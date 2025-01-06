@@ -6,6 +6,7 @@ from cotisation.forms import ContributionForm, CotisationForm
 from django.template.loader import render_to_string
 from parametrage.operations import OperationsHelpers
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 def contribution_list(request):
@@ -46,21 +47,64 @@ def save_contribution_form(request, form, template_name, action):
     return JsonResponse(data)
 
 
+# def contributions_update(request, id):
+#     contribution = get_object_or_404(Contribution, id=id)
+    
+#     if request.method == 'POST':
+#         form = ContributionForm(request.POST, instance=contribution)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('contribution_list')
+#     else:
+#         form = ContributionForm(instance=contribution)
+
+#     return render(request, 'contribution_update.html', {'form': form, 'contribution': contribution})
+
+
+@login_required
 def contributions_update(request, id):
     contribution = get_object_or_404(Contribution, id=id)
-    
-    if request.method == 'POST':
+
+    if request.method == "POST":
+        print(request.POST)
         form = ContributionForm(request.POST, instance=contribution)
         if form.is_valid():
-            form.save()
-            return redirect('contribution_list')
+            contribution = form.save(commit=False)  # Ne sauvegardez pas encore
+            contribution.user_valide = request.user  # Assignez l'utilisateur
+            contribution.save()
+            if request.user.is_authenticated:
+                contribution.user_valide = request.user
+            else:
+                # Gérer le cas où l'utilisateur n'est pas authentifié
+                return JsonResponse(
+                    {
+                        "form_is_valid": False,
+                        "form_error": "Vous devez être connecté pour effectuer cette action.",
+                    }
+                )
+
+            return JsonResponse({"form_is_valid": True, "url_redirect": "/cotisation/contributions/list/"})
+        else:
+            return JsonResponse(
+                {
+                    "form_is_valid": False,
+                    "form_error": "Le formulaire contient des erreurs.",
+                }
+            )
+
     else:
         form = ContributionForm(instance=contribution)
 
-    return render(request, 'contribution_update.html', {'form': form, 'contribution': contribution})
+    # Rendre le formulaire en HTML partiel
+    html_form = render_to_string(
+        "contribution_update.html",
+        {"form": form, "contribution": contribution},
+        request=request,
+    )
+    return JsonResponse({"html_form": html_form})
 
 
-#  @login_required
+@login_required
 def contribution_delete(request, id):
     contribution = get_object_or_404(Contribution, id=id)
 
@@ -73,6 +117,7 @@ def contribution_delete(request, id):
     return JsonResponse({"success": False})
 
 
+@login_required
 def contribution_detail(request, pk):
     contribution = get_object_or_404(Contribution, pk=pk)
     return render(request, "contribution_detail.html", {"contribution": contribution})

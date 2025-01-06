@@ -104,7 +104,7 @@ def cotisation_update(request, id):
     return JsonResponse({"html_form": html_form})
 
 
-# @login_required
+@login_required
 def cotisation_delete(request, id):
     cotisation = get_object_or_404(Cotisation, id=id)
 
@@ -121,6 +121,7 @@ def cotisation_delete(request, id):
     return JsonResponse({"success": False})
 
 
+@login_required
 def cotisation_detail(request, pk):
     cotisation = get_object_or_404(Cotisation, pk=pk)
     return render(request, "cotisation_details.html", {"cotisation": cotisation})

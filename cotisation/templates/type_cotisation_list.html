@@ -19,7 +19,7 @@
                 const typeId = this.dataset.id; // Récupère l'ID du membre à partir de l'attribut data-id
     
                 Swal.fire({
-                    title: 'Êtes-vous sûr de vouloir supprimer cette ligne?',
+                    title: 'Êtes-vous sûr de vouloir supprimer cette ligne de type de cotisation?',
                     text: 'Vous ne pourrez pas récupérer cette ligne!',
                     icon: 'warning',
                     showCancelButton: true,
@@ -29,21 +29,21 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Envoi de la requête de suppression
-                        fetch(`type_cotisation/delete/${typeId}/`, {  // Ajustez l'URL selon votre configuration
+						fetch(`/cotisation/type_cotisation/delete/${typeId}/`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'X-CSRFToken': '{{ csrf_token }}'  // Ajoutez le token CSRF pour la sécurité
+                                'X-CSRFToken': '{{ csrf_token }}'
                             }
                         })
                         .then(response => {
                             if (response.ok) {
-                                Swal.fire('Membre supprimé !', '', 'success').then(() => {
+                                Swal.fire('Type cotisation supprimé !', '', 'success').then(() => {
                                     // Optionnel : Redirigez ou mettez à jour la page
                                     window.location.reload(); // Recharge la page pour mettre à jour la liste
                                 });
                             } else {
-                                Swal.fire('Erreur lors de la suppression du membre !', '', 'error');
+                                Swal.fire('Erreur lors de la suppression du type cotisation !', '', 'error');
                             }
                         })
                         .catch(error => {
@@ -51,12 +51,12 @@
                         });
     
                     } else if (result.isDismissed) {
-                        Swal.fire('Membre non supprimé !');
-                    }
+                        Swal.fire('Type cotisation non supprimé !');
+					}
                 });
             };
-        });    
-    });
+        });
+    })
 </script>
 {% endblock %}
 
@@ -112,11 +112,10 @@
                                         <tr>
                                             <td><img class="rounded-circle" width="35" src=" {% static 'images/profile/small/pic2.jpg' %}" alt=""></td>
                                             <td>{{type.nom}}</td>                                            
-                                            <td>{{type.montant_max_retrait}}</td>                                         
+                                            <td>{{type.montant_max_retrait}}</td>                                       
                                            
                                             <td class="d-flex justify-content-end">
 												<button  type="button" class="btn btn-sm btn-primary mr-1 js-update-entity" data-toggle="modal" data-url="{% url 'type_cotisation_update' type.id %}" ><i class="la la-pencil"></i></button>												
-                                                <a href="{% url 'type_cotisation_detail' type.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-eye"></i></a>
                                                 <button type="button" class="btn-sm btn-danger deleteButton" data-id="{{ type.id }}"><i class="la la-trash-o"></i></button>
                                             </td> 
                                         </tr>
@@ -125,54 +124,6 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div id="grid-view" class="tab-pane fade col-lg-12">
-                    <div class="row">
-                        {% for type in type_cotisations %}
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="card card-profile">
-                                <div class="card-header justify-content-end pb-0">
-                                    <div class="dropdown">
-                                        <button class="btn btn-link" type="button" data-toggle="dropdown">
-                                          <span class="dropdown-dots fs--1"></span>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0">
-                                            <div class="py-2">
-                                                <a class="dropdown-item">											
-                                                    <button href="{% url 'type_cotisation_detail' type.id %}"  type="button" class="btn btn-sm btn-primary"  style="background: none; border: none; color: rgb(77, 84, 153); padding: 0; cursor: pointer;">Edit</button>
-                                                </a>
-                                                <a class="dropdown-item">
-                                                    <button type="button" class="btn btn-sm btn-danger deleteButton" style="background: none; border: none; color: rgb(199, 88, 88); padding: 0; cursor: pointer;">supprimer</button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card-body pt-2">
-                                    <div class="text-center">
-                                        <div class="profile-photo">											
-                                          <img src="{% static 'images/profile/small/pic1.jpg' %}" class="img-fluid rounded-circle" width="100"  alt="">
-                                        </div>
-                                        <h3 class="mt-4 mb-1">Sabushimike frank</h3>										  
-                                        <ul class="list-group mb-3 list-group-flush">
-                                            <li class="list-group-item px-0 d-flex justify-content-between">
-                                                <span class="mb-0">Nom :</span><strong>{{type.nom}}</strong>
-                                            </li>                                           
-                                        </ul>                                       										  
-                                        <ul class="list-group mb-3 list-group-flush">
-                                            <li class="list-group-item px-0 d-flex justify-content-between">
-                                                <span class="mb-0">Montant max retrait :</span><strong>{{type.montant_max_retrait}}</strong>
-                                            </li>                                           
-                                        </ul>									  
-                                    
-                                        <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="{% url 'type_cotisation_detail' type.id %}">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>

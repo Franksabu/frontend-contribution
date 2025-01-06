@@ -11,7 +11,7 @@ class random_reference:
         if prefixe:
             # Générer un nombre aléatoire entre 1000 et 9999
             reference = f'{prefixe}-{datetime.datetime.now().year}-{datetime.datetime.now().month}-'
-            
+           
         else:
             reference = f'{datetime.datetime.now().year}{datetime.datetime.now().month}'
 

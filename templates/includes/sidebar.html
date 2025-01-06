@@ -6,7 +6,7 @@
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label first">Main Menu</li>
-            <li><a href="{% url 'index_view' %}" >
+            <li><a href="{% url 'home' %}" >
                   <i class="la la-home"></i>
                   <span class="nav-text">Tableau de bord</span>
                 </a>              
@@ -33,7 +33,9 @@
                     <li><a href="{% url 'cotisation_list' %}">cotisation</a></li>                                      
                     <li><a href="{% url 'type_cotisation_list' %}">Type de cotisation</a></li>                    
                     <li><a href="{% url 'contribution_list' %}">contribution</a></li>
-                    <li><a href="{% url 'detail_contribution_list' %}">Detail pour le membre contibue</a></li>                    
+                    {% comment %}
+                    <li><a href="{% url 'detail_contribution_list' %}">Detail pour le membre contibue</a></li> 
+                    {% endcomment %}                 
                 </ul>
             </li>
             <li><a class="" href="{% url 'assistance_list'%}">
@@ -91,12 +93,12 @@
       <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Shop</a>
                         <ul aria-expanded="false">
                             <li><a href="ecom-product-grid.html">Product Grid</a></li>
-          <li><a href="ecom-product-list.html">Product List</a></li>
-          <li><a href="ecom-product-detail.html">Product Details</a></li>
-          <li><a href="ecom-product-order.html">Order</a></li>
-          <li><a href="ecom-checkout.html">Checkout</a></li>
-          <li><a href="ecom-invoice.html">Invoice</a></li>
-          <li><a href="ecom-customers.html">Customers</a></li>
+                            <li><a href="ecom-product-list.html">Product List</a></li>
+                            <li><a href="ecom-product-detail.html">Product Details</a></li>
+                            <li><a href="ecom-product-order.html">Order</a></li>
+                            <li><a href="ecom-checkout.html">Checkout</a></li>
+                            <li><a href="ecom-invoice.html">Invoice</a></li>
+                            <li><a href="ecom-customers.html">Customers</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -181,9 +183,9 @@
             </li>
             <li class="nav-label">Extra</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-      <i class="la la-th-list"></i>
-      <span class="nav-text">Pages</span>
-    </a>
+                <i class="la la-th-list"></i>
+                <span class="nav-text">Pages</span>
+                </a>
                 <ul aria-expanded="false">
                     <li><a href="page-register.html">Register</a></li>
                     <li><a href="page-login.html">Login</a></li>

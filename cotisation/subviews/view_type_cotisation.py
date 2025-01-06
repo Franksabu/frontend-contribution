@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def type_cotisation_list(request):
     context = {
         "type_cotisations": TypeCotisation.objects.all(),
@@ -15,6 +16,7 @@ def type_cotisation_list(request):
     return render(request, "type_cotisation_list.html", context)
 
 
+@login_required
 def type_cotisation_create(request):
     form = (
         TypecotisationForm(request.POST)
@@ -51,30 +53,8 @@ def save_type_cotisation_form(request, form, template_name, action):
     return JsonResponse(data)
 
 
-# def type_cotisation_update(request, id):
-#     type_cotisation = get_object_or_404(TypeCotisation, id=id)
-
-#     if request.method == 'POST':
-#         form = TypecotisationForm(request.POST, instance=type_cotisation)
-#         if form.is_valid():
-#             form.save()
-#             return JsonResponse({
-#                 'form_is_valid': True,
-#                 'url_redirect': reverse('type_cotisation_list')})
-#             # return redirect('type_cotisation_list')
-#         else:
-#             return JsonResponse({
-#                 'form_is_valid': False,
-#                 'form_error': form.errors
-#             })
-#             # return render(request, 'cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
-#     else:
-#         form = TypecotisationForm(instance=type_cotisation)
-
-#     return render(request, 'type_cotisation_update.html', {'form': form, 'type_cotisation': type_cotisation})
-
 @login_required
-def cotisation_update(request, id):
+def type_cotisation_update(request, id):
     type_cotisation = get_object_or_404(TypeCotisation, id=id)
 
     if request.method == "POST":
@@ -95,7 +75,7 @@ def cotisation_update(request, id):
                     }
                 )
 
-            return JsonResponse({"form_is_valid": True, "url_redirect": "/cotisation/list/"})
+            return JsonResponse({"form_is_valid": True, "url_redirect": "/cotisation/type_cotisations/list/"})
         else:
             return JsonResponse(
                 {
@@ -107,8 +87,16 @@ def cotisation_update(request, id):
     else:
         form = TypecotisationForm(instance=type_cotisation)
 
+    # Rendre le formulaire en HTML partiel
+    html_form = render_to_string(
+        "type_cotisation_update.html",
+        {"form": form, "type_cotisation": type_cotisation},
+        request=request,
+    )
+    return JsonResponse({"html_form": html_form})
 
-# @login_required
+
+@login_required
 def type_cotisation_delete(request, id):
     type_cotisation = get_object_or_404(TypeCotisation, id=id)
 
@@ -121,6 +109,7 @@ def type_cotisation_delete(request, id):
     return JsonResponse({"success": False})
 
 
+@login_required
 def type_cotisation_detail(request, pk):
     type_cotisation = get_object_or_404(TypeCotisation, pk=pk)
     return render(

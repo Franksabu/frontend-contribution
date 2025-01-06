@@ -2,7 +2,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
-        $('.js-entity-update-form').submit(function(e) {
+        $('.js-entity-create-form').submit(function(e) {
             e.preventDefault();
             var $form = $(this); // Stockez une référence au formulaire
             // Désactiver le bouton pour éviter les soumissions multiples
@@ -38,7 +38,7 @@
     });
 </script>
 {% endblock %}
-<form id="detail-update" action="{% url 'detail_contribution_update' contri_id=contribution.id id=detail_contribution.id %}" method="post" class="js-entity-update-form">
+<form action="{% url 'type_cotisation_update' type_cotisation.id %}" method="post" class="js-entity-update-form">
     {% csrf_token %}
     <div class="modal-header" style="background-color: #143b64;">
         <h5 class="modal-title text-white">Formulaire pour ajouter type de cotisation</h5>
@@ -47,7 +47,7 @@
         </button>
     </div>
     <div class="modal-body">						
-        {% include 'detail_contribution_form.html' %}
+        {% include 'type_cotisation_form.html' %}
     </div>
     <div class="modal-footer">
         <div class="row">

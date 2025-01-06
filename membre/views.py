@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
-# @login_required
+@login_required
 def membre_list(request):
     context = {
         "membres": Membre.objects.all(),
@@ -25,7 +25,7 @@ def get_choices(request):
     return JsonResponse({"choix_sex": choix_sex, "choix_identite": choix_identite})
 
 
-# @login_required
+@login_required
 def membre_create(request):
 
     form = MembreForm(request.POST) if request.method == "POST" else MembreForm()
@@ -116,7 +116,7 @@ def membre_update(request, id):
     return JsonResponse({"html_form": html_form})
 
 
-# @login_required
+@login_required
 def membre_detail(request, pk):
     membre = get_object_or_404(Membre, pk=pk)
     return render(request, "membre_detail.html", {"membre": membre})
@@ -137,7 +137,7 @@ def membre_delete(request, id):
     return JsonResponse({"success": False})
 
 
-# @login_required
+@login_required
 def membre_validate(request, pk):
     membre = get_object_or_404(Membre, pk=pk)
     if request.method == "POST":

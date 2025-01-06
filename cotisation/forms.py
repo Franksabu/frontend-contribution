@@ -72,9 +72,7 @@ class ContributionForm(forms.ModelForm):
             "montant": forms.NumberInput(
                 attrs={"class": "form-control", "placeholder": "Montant ..."}
             ),
-            "date_contrib": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
-            ),
+            "date_contrib": forms.DateInput(),
             "membre": forms.Select(attrs={"class": "form-control"}),
             "cotisation": forms.Select(attrs={"class": "form-control"}),
         }
@@ -99,16 +97,16 @@ class DetailContributionForm(forms.ModelForm):
         model = DetailContribution
         fields = [
             "montant_paye",
-            "cotisation",
-            "membre",
+            "contribution",
+            "date_contrib"
         ]
         exclude = ("date_create",)
         widgets = {
             "montant_paye": forms.NumberInput(
                 attrs={"class": "form-control", "placeholder": "Montant minimum..."}
             ),
-            "membre": forms.Select(attrs={"class": "form-control"}),
-            "cotisation": forms.Select(attrs={"class": "form-control"}),
+            "contribution": forms.Select(attrs={"class": "form-control"}),
+            "date_contrib": forms.DateInput(),
         }
         labels = {
             "membre": "Membre",
@@ -116,6 +114,16 @@ class DetailContributionForm(forms.ModelForm):
             "montant_paye": "Montant de contribution",
         }
 
+    def __init__(self, *args, **kwargs):
+        # Extraire l'argument contributionId
+        self.contribution_id = kwargs.pop('contributionId', None)
+        super().__init__(*args, **kwargs)
+
+        # Utilisez contribution_id si nécessaire
+        if self.contribution_id:
+            # Vous pourriez vouloir faire quelque chose avec cet ID, 
+            # par exemple, le définir sur l'instance actuelle
+            self.instance.contribution_id = self.contribution_id
 
 # --------------------Type_cotisationForm --------------------------------------#
 

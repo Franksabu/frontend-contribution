@@ -1,6 +1,8 @@
 # models.py
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
+# from cotisation.models import Contribution
 from membre.models import Membre
 from parametrage.enums import choix_periode, AUCUN
 
@@ -37,7 +39,8 @@ class Cotisation(models.Model):
         on_delete=models.CASCADE,
     )
     user_create = models.ForeignKey(
-        User, related_name="cotisations_created", on_delete=models.CASCADE
+        User, related_name="cotisations_created",
+        on_delete=models.CASCADE
     )
     user_validate = models.ForeignKey(
         User,
@@ -61,20 +64,8 @@ class Cotisation(models.Model):
     def __str__(self):
         return f"{self.montant_min} "
 
-# ----------------models pour la Detail_contribution------------------
-
-
-class DetailContribution(models.Model):
-    montant_paye = models.DecimalField(max_digits=10, decimal_places=2, default="0.00")
-    cotisation = models.ForeignKey(Cotisation, on_delete=models.CASCADE)
-    membre = models.ForeignKey(Membre, on_delete=models.CASCADE)
-    date_create = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ("-id",)
-
-
 # ----------------models pour la contribution------------------
+
 
 class Contribution(models.Model):
     reference = models.CharField(max_length=50, unique=True)
@@ -112,4 +103,16 @@ class Contribution(models.Model):
         ordering = ("-id",)
 
     def __str__(self):
-        return f"{self.reference} {self.montant} {self.date_contrib} {self.membre} {self.cotisation}"
+        return f"{self.membre}"
+
+# ----------------models pour la Detail_contribution------------------
+
+
+class DetailContribution(models.Model):
+    montant_paye = models.DecimalField(max_digits=10, decimal_places=2, default="0.00")
+    contribution = models.ForeignKey(Contribution, on_delete=models.CASCADE, null=True)
+    date_contrib = models.DateTimeField(default=timezone.now)
+    date_create = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-id",)

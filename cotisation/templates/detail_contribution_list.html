@@ -16,6 +16,54 @@
     $(document).ready(function() {
         document.querySelectorAll('.deleteButton').forEach(button => {
             button.onclick = function() {
+                const contriId = this.dataset.contri_id; // Récupère l'ID de la contribution à partir de l'attribut data-contri-id
+                const detailId = this.dataset.id; // Récupère l'ID du détail à partir de l'attribut data-id
+
+                Swal.fire({
+                    title: 'Êtes-vous sûr de vouloir supprimer cette ligne?',
+                    text: 'Vous ne pourrez pas récupérer cette ligne!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Supprimer',
+                    cancelButtonText: 'Annuler',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Envoi de la requête de suppression
+                        fetch(`/cotisation/detail_contributions/delete/${contriId}/${detailId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire('Membre supprimé !', '', 'success').then(() => {
+                                    // Optionnel : Redirigez ou mettez à jour la page
+                                    window.location.reload(); // Recharge la page pour mettre à jour la liste
+                                });
+                            } else {
+                                Swal.fire('Erreur lors de la suppression du membre !', '', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Erreur lors de la requête !', '', 'error');
+                        });
+
+                    } else if (result.isDismissed) {
+                        Swal.fire('Membre non supprimé !');
+                    }
+                });
+            };
+        });
+    });
+</script>
+
+<!-- <script>
+    $(document).ready(function() {
+        document.querySelectorAll('.deleteButton').forEach(button => {
+            button.onclick = function() {
                 const typeId = this.dataset.id; // Récupère l'ID du membre à partir de l'attribut data-id
     
                 Swal.fire({
@@ -57,7 +105,7 @@
             };
         });
     })
-</script>
+</script> -->
 {% endblock %}
 
 {% block content %}
@@ -91,11 +139,14 @@
 					<div class="card">
 						<div class="card-header">
 							<h4 class="card-title">Detail de contributions  </h4>
-							<!-- <a href="add-professor.html" class="btn btn-primary">+ Ajoter le nouveau</a> -->
-							<button type="button" class="btn btn-primary js-create-entity" 
-							data-url="{% url 'detail_contribution_create' %}">
-								+ Formulaire pour ajouter la contribution 
-							</button>
+							<div class="button-group" style="display: flex; justify-content: flex-end; gap: 10px;">
+							    <!-- <a href="add-professor.html" class="btn btn-primary">+ Ajoter le nouveau</a> -->
+							    <a href="{% url 'contribution_list' %}" class="btn btn-secondary " style="float: right;"> -Retour a la list</a>
+							    <button type="button" class="btn btn-primary js-create-entity" 
+							    data-url="{% url 'detail_contribution_create' contribution.id %}">
+							    	+ Formulaire pour ajouter la contribution 
+							    </button>
+						    </div>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -103,26 +154,24 @@
 									<thead>
 										<tr>
 											<th></th>
-											<th>Membre</th>
-											<th>Cotisation</th>
-											<th>Montant paye</th>									
+											<th>Contribution</th>
+											<th>montant_paye</th>									
 											<th>Date de contribution</th>									
 											<th>Actions</th>
 										</tr>
 									</thead>
 									<tbody>
-                                        {% for detail in detail_contributions %}
+                                        {% for detail in detail_contribution %}
 										<tr>
 											<td><img class="rounded-circle" width="35" src="{% static 'images/profile/small/pic1.jpg' %}" alt=""></td>
 										
-											<td>{{detail.membre}}</td>
-											<td>{{detail.cotisation}}</td>											
+											<td>{{detail.contribution.reference}}</td>
 											<td>{{detail.montant_paye}}</td>
-											<td>{{cotisation.date_create}}</td>
+											<td>{{detail.date_contrib}}</td>
 											<td class="d-flex justify-content-end" >
-												<button  type="button" class="btn btn-sm btn-primary mr-1" data-url="{% url 'detail_contribution_update' %}" ><i class="la la-pencil"></i></button>												
-												<a href="{% url 'detail_contribution_detail' detail.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-folder-open"></i></a>												
-												<button type="button" class="btn btn-sm btn-danger deleteButton " data-id="{{detail.id}}" ><i class="la la-trash-o"></i></button>														
+												<button  type="button" class="btn btn-sm btn-primary mr-1 js-update-entity" data-toggle="modal" data-url="{% url 'detail_contribution_update' contribution.id detail.id %}" ><i class="la la-pencil"></i></button>												
+												{% comment %} <a href="{% url 'detail_contribution_detail' contribution.id detail.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-eye"></i></a> {% endcomment %}												
+												<button type="button" class="btn btn-sm btn-danger deleteButton " data-contri_id="{{contribution.id}}" data-id="{{detail.id}}" ><i class="la la-trash-o"></i></button>														
 											</td>												
 										</tr>
                                         {% endfor %}												
@@ -132,9 +181,10 @@
 						</div>
                     </div>
                 </div>
+				{% comment %}
 				<div id="grid-view" class="tab-pane fade col-lg-12">
 					<div class="row">
-                        {% for det in detail_contributions %}
+                        {% for det in detail_contribution %}
 						<div class="col-lg-4 col-md-6 col-sm-6 col-12">
 							<div class="card card-profile">
 							  <div class="card-header justify-content-end pb-0">
@@ -162,13 +212,11 @@
 									    <h3 class="mt-4 mb-1">Deangelo</h3>										  
 									    <ul class="list-group mb-3 list-group-flush">
 											<li class="list-group-item px-0 d-flex justify-content-between">
-												<span class="mb-0">Membre:</span><strong>{{det.mmbre}}</strong></li>
-									  	    <li class="list-group-item px-0 d-flex justify-content-between">
-									  	        <span class="mb-0">Cotisation:</span><strong>{{det.cotisation}}</strong></li>
+												<span class="mb-0">Contribution:</span><strong>{{det.contribution}}</strong></li>									  	    
 											<li class="list-group-item px-0 d-flex justify-content-between">
-											    <span class="mb-0">Montant:</span><strong>{{det.montant_paye}}</strong></li>
+											    <span class="mb-0">Montant contribue:</span><strong>{{det.montant_paye}}</strong></li>
 									  	    <li class="list-group-item px-0 d-flex justify-content-between">
-									  	        <span class="mb-0">Date de contribution :</span><strong>{{det.date_create}}</strong></li>									  	    
+									  	        <span class="mb-0">Date de contribution :</span><strong>{{det.date_contrib}}</strong></li>									  	    
 									    </ul>
 									    <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="{% url 'detail_contribution_detail' det.id %}">Read More</a>
 									</div>
@@ -178,6 +226,7 @@
 						{% endfor %}
 				    </div>
                 </div>
+				{% endcomment %}
 			</div>
 		</div>
 	</div>				

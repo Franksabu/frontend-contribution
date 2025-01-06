@@ -22,109 +22,52 @@
     </div>
     
     <div class="row">
-        <div class="col-xl-3 col-xxl-4 col-lg-4">
+        <div id="grid-view" class="tab-pane fade col-lg-12">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="text-center p-3 overlay-box" style="background-image: url(images/big/img1.jpg);">
-                            <div class="profile-photo">
-                               
-                                <img class="img-fluid rounded-circle" width="100" src="{% static 'images/profile/small/pic10.jpg'%}" alt="">
-                            </div>
-                            <h3 class="mt-3 mb-1 text-white">Satou Fafa</h3>
-                        </div>
-                       
-                        <div class="card-footer text-center border-0 mt-0">								
-                            <a href="javascript:void(0);" class="btn btn-primary btn-rounded px-4">Follow</a>
-                            <a href="javascript:void(0);" class="btn btn-warning btn-rounded px-4">Message</a>
-                        </div>
-                    </div>
-                </div>                                    
-            </div>
-        </div>
-        <div class="col-xl-9 col-xxl-8 col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <div class="profile-tab">
-                        <div class="custom-tab-1">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item"><a href="#about-me" data-toggle="tab" class="nav-link active show">information personnelle</a></li>
-                                <li class="nav-item"><a href="#my-posts" data-toggle="tab" class="nav-link">Posts</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="about-me" class="tab-pane fade active show">
-                                    <div class="profile-personal-info pt-4">
-                                        <h4 class="text-primary mb-4">information personelle</h4>
-                                        <div class="row mb-4">
-                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-                                                <h5 class="f-w-500">Name <span class="pull-right">:</span>
-                                                </h5>
-                                            </div>
-                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{type_cotisation.nom}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4">
-                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-                                                <h5 class="f-w-500">Montant maximal a retirer <span class="pull-right">:</span>
-                                                </h5>
-                                            </div>
-                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6">{{type_cotisation.montant_max_retrait}}<span></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4">
-                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-                                                <h5 class="f-w-500">Description <span class="pull-right">:</span>
-                                                </h5>
-                                            </div>
-                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{type_cotisation.description}}</span>
-                                            </div>
-                                        </div>
-                                    </div>                                                                        
-                                </div>
-                                <div id="my-posts" class="tab-pane fade">
-                                    <div class="my-post-content pt-3">
-                                        <div class="post-input">
-                                            <textarea name="textarea" id="textarea" cols="30" rows="5" class="form-control bg-transparent" placeholder="Please type what you want...."></textarea> <a href="javascript:void()"><i class="ti-clip"></i> </a>
-                                            <a href="javascript:void()"><i class="ti-camera"></i> </a><a href="javascript:void()" class="btn btn-primary">Post</a>
-                                        </div>
-                                        <div class="profile-uoloaded-post border-bottom-1 pb-5">
-                                            <img src="{% static 'images/profile/8.jpg' %}" alt="" class="img-fluid">
-                                            <a class="post-title" href="javascript:void()">
-                                                <h4>Collection of textile samples lay spread</h4>
-                                            </a>
-                                            <p>A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning
-                                                of spare which enjoy whole heart.</p>
-                                            <button class="btn btn-primary mr-3"><span class="mr-3"><i class="fa fa-heart"></i></span>Like</button>
-                                            <button class="btn btn-secondary"><span class="mr-3"><i class="fa fa-reply"></i></span>Reply</button>
-                                        </div>
-                                        <div class="profile-uoloaded-post border-bottom-1 pb-5">
-                                            <img src="{% static 'images/profile/9.jpg' %}" alt="" class="img-fluid">
-                                            <a class="post-title" href="javascript:void()">
-                                                <h4>Collection of textile samples lay spread</h4>
-                                            </a>
-                                            <p>A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning
-                                                of spare which enjoy whole heart.</p>
-                                            <button class="btn btn-primary mr-3"><span class="mr-3"><i class="fa fa-heart"></i></span>Like</button>
-                                            <button class="btn btn-secondary"><span class="mr-3"><i class="fa fa-reply"></i></span>Reply</button>
-                                        </div>
-                                        <div class="profile-uoloaded-post pb-5">
-                                            <img src="{% static 'images/profile/8.jpg' %}" alt="" class="img-fluid">
-                                            <a class="post-title" href="javascript:void()">
-                                                <h4>Collection of textile samples lay spread</h4>
-                                            </a>
-                                            <p>A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning
-                                                of spare which enjoy whole heart.</p>
-                                            <button class="btn btn-primary mr-3"><span class="mr-3"><i class="fa fa-heart"></i></span>Like</button>
-                                            <button class="btn btn-secondary"><span class="mr-3"><i class="fa fa-reply"></i></span>Reply</button>
-                                        </div>
-                                        <div class="text-center mb-2"><a href="javascript:void()" class="btn btn-primary">Load More</a>
-                                        </div>
+                {% for type in type_cotisations %}
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-profile">
+                        <div class="card-header justify-content-end pb-0">
+                            <div class="dropdown">
+                                <button class="btn btn-link" type="button" data-toggle="dropdown">
+                                  <span class="dropdown-dots fs--1"></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right border py-0">
+                                    <div class="py-2">
+                                        <a class="dropdown-item">											
+                                            <button href="{% url 'type_cotisation_detail' type.id %}"  type="button" class="btn btn-sm btn-primary"  style="background: none; border: none; color: rgb(77, 84, 153); padding: 0; cursor: pointer;">Edit</button>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <button type="button" class="btn btn-sm btn-danger deleteButton" style="background: none; border: none; color: rgb(199, 88, 88); padding: 0; cursor: pointer;">supprimer</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card-body pt-2">
+                            <div class="text-center">
+                                <div class="profile-photo">											
+                                  <img src="{% static 'images/profile/small/pic1.jpg' %}" class="img-fluid rounded-circle" width="100"  alt="">
+                                </div>
+                                <h3 class="mt-4 mb-1">Sabushimike frank</h3>										  
+                                <ul class="list-group mb-3 list-group-flush">
+                                    <li class="list-group-item px-0 d-flex justify-content-between">
+                                        <span class="mb-0">Nom :</span><strong>{{type.nom}}</strong>
+                                    </li>                                           
+                                </ul>                                       										  
+                                <ul class="list-group mb-3 list-group-flush">
+                                    <li class="list-group-item px-0 d-flex justify-content-between">
+                                        <span class="mb-0">Montant max retrait :</span><strong>{{type.montant_max_retrait}}</strong>
+                                    </li>                                           
+                                </ul>									  
+                            
+                                <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="{% url 'type_cotisation_detail' type.id %}">Read More</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>   

@@ -127,6 +127,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'home'  # Page vers laquelle rediriger après connexion
+LOGOUT_REDIRECT_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -145,6 +147,7 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
 MEDIA_URL = "/media/"  # It's common to add a leading slash for MEDIA_URL
 
 # Paths where Django will search for static files
@@ -155,6 +158,7 @@ STATICFILES_DIRS = [
 
 # Directory where all static files will be collected for production
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 # Directory where uploaded media files will be stored
 MEDIA_ROOT = BASE_DIR / "images"

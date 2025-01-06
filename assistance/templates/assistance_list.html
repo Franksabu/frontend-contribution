@@ -27,48 +27,92 @@ $(document).ready(function() {
                 alert(data.message);
             },
             error: function(xhr) {
-                alert('Erreur lors de la création de la cotisation : ' + xhr.responseJSON.errors);
+                alert('Erreur lors de la création de l assistance : ' + xhr.responseJSON.errors);
             }
         });
     });
 });
-
 $(document).ready(function() {
-    document.querySelectorAll('.deleteButton').forEach(button => {
-        button.onclick = function() {
-            Swal.fire({
-                title: 'Êtes-vous sûr de vouloir supprimer cette ligne ?',
-                text: 'Vous ne pourrez pas récupérer cette ligne imaginaire !',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Supprimer',
-                cancelButtonText: 'Annuler',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch('/delete-file', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            Swal.fire('Fichier supprimé !', '', 'success');
-                        } else {
-                            Swal.fire('Erreur lors de la suppression du fichier !', '', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire('Erreur lors de la requête !', '', 'error');
-                    }); 
-                } else if (result.isDismissed) {
-                    Swal.fire('Fichier non supprimé !');
-                }
-            });
-        };
+        document.querySelectorAll('.deleteButton').forEach(button => {
+            button.onclick = function() {
+                const assistanceId = this.dataset.id; // Récupère l'ID du membre à partir de l'attribut data-id
+    
+                Swal.fire({
+                    title: 'Êtes-vous sûr de vouloir supprimer cette ligne?',
+                    text: 'Vous ne pourrez pas récupérer cette ligne!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Supprimer',
+                    cancelButtonText: 'Annuler',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Envoi de la requête de suppression
+                        fetch(`/assistance/assistances/delete/${assistanceId}/`, {  // Ajustez l'URL selon votre configuration
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'  // Ajoutez le token CSRF pour la sécurité
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire('Membre assistant supprimé !', '', 'success').then(() => {
+                                    // Optionnel : Redirigez ou mettez à jour la page
+                                    window.location.reload(); // Recharge la page pour mettre à jour la liste
+                                });
+                            } else {
+                                Swal.fire('Erreur lors de la suppression du membre assistant !', '', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Erreur lors de la requête !', '', 'error');
+                        });
+    
+                    } else if (result.isDismissed) {
+                        Swal.fire('Membre assistant non supprimé !', '', 'info');
+                    }
+                });
+            };
+        });    
     });
-})
+    
+// $(document).ready(function() {
+//     document.querySelectorAll('.deleteButton').forEach(button => {
+//         button.onclick = function() {
+//             Swal.fire({
+//                 title: 'Êtes-vous sûr de vouloir supprimer cette ligne ?',
+//                 text: 'Vous ne pourrez pas récupérer cette ligne imaginaire !',
+//                 icon: 'warning',
+//                 showCancelButton: true,
+//                 confirmButtonText: 'Supprimer',
+//                 cancelButtonText: 'Annuler',
+//                 reverseButtons: true
+//             }).then((result) => {
+//                 if (result.isConfirmed) {
+//                     fetch('/delete-file', {
+//                         method: 'POST',
+//                         headers: {
+//                             'Content-Type': 'application/json'
+//                         }
+//                     })
+//                     .then(response => {
+//                         if (response.ok) {
+//                             Swal.fire('Fichier supprimé !', '', 'success');
+//                         } else {
+//                             Swal.fire('Erreur lors de la suppression du fichier !', '', 'error');
+//                         }
+//                     })
+//                     .catch(error => {
+//                         Swal.fire('Erreur lors de la requête !', '', 'error');
+//                     }); 
+//                 } else if (result.isDismissed) {
+//                     Swal.fire('Fichier non supprimé !');
+//                 }
+//             });
+//         };
+//     });
+// })
 
 </script>
 {% endblock %}
@@ -132,10 +176,19 @@ $(document).ready(function() {
                                                 <td>{{ assistance.cotisation }}</td>
                                                 <td>{{ assistance.date_assistance }}</td>
                                                 <td>
+                                                <button>
                                                     <div class="d-flex justify-content-end">
-                                                        <button type="button" class="btn btn-sm btn-primary mr-1" ><i class="la la-pencil"></i></button>
-                                                        <a href="{% url 'assistance_detail' assistance.id %}" class="btn btn-sm btn-success mr-1"><i class="la la-eye"></i></a>															
-                                                        <button type="button" class="btn btn-sm btn-danger deleteButton"><i class="la la-trash-o"></i></button>																
+                                                        <button type="button" 
+                                                        class="btn btn-primary js-update-entity" 
+                                                        data-url="{% url 'assistance_update' assistance.id %}">
+                                                        <i class="la la-pencil"></i>
+                                                </button>
+                                                <a href="{% url 'assistance_detail' assistance.id %}" class="btn btn-sm btn-success mr-1">
+                                                    <i class="la la-eye"></i>
+                                                </a>
+                                                <button type="button" class="btn-sm btn-danger deleteButton" data-id="{{ assistance.id }}">
+                                                    <i class="la la-trash-o"></i>
+                                                </button>																
                                                     </div>
                                                 </td>													
                                             </tr>
@@ -148,7 +201,7 @@ $(document).ready(function() {
                 </div>
 				<div id="grid-view" class="tab-pane fade col-lg-12">
 					<div class="row">
-                        {%for ass in assistances %}
+                        {% for ass in assistances %}
 						<div class="col-lg-4 col-md-6 col-sm-6 col-12">
 							<div class="card card-profile">
 							  <div class="card-header justify-content-end pb-0">

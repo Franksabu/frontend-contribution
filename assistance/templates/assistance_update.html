@@ -33,7 +33,6 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
-
 <form id="assistance-form" action="{% url 'assistance_update' assistance.id %}" method="post" class="js-entity-update-form">
     {% csrf_token %}
     <div class="modal-header" style="background-color: #143b64;">
