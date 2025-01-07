@@ -95,8 +95,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "constructionDB",
         "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "127.0.0.1",
+        "PASSWORD": "noplenople123",
+        "HOST": "localhost",
         "PORT": "5432",
     },
 }

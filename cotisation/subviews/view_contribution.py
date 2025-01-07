@@ -29,8 +29,7 @@ def save_contribution_form(request, form, template_name, action):
         else:
             res = OperationsHelpers.execute_action(
                 request, action, form
-            )
-            print(form)
+            )         
             if len(res) == 0:
                 data["form_is_valid"] = True
                 data["html_content_list"] = render_to_string("contribution_list.html")
@@ -48,8 +47,7 @@ def save_contribution_form(request, form, template_name, action):
 
 
 # def contributions_update(request, id):
-#     contribution = get_object_or_404(Contribution, id=id)
-    
+#     contribution = get_object_or_404(Contribution, id=id)    
 #     if request.method == 'POST':
 #         form = ContributionForm(request.POST, instance=contribution)
 #         if form.is_valid():
