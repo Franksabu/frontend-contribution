@@ -62,6 +62,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://154.117.212.59",
     # Autres origines si nécessaire
 ]
 
@@ -89,27 +90,27 @@ WSGI_APPLICATION = "contribution.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "constructionDB",
-        "USER": "postgres",
-        "PASSWORD": "noplenople123",
-        "HOST": "localhost",
-        "PORT": "5432",
-    },
-}
-
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
 #         "NAME": "constructionDB",
 #         "USER": "postgres",
-#         "PASSWORD": "postgres",
-#         "HOST": "127.0.0.1",
+#         "PASSWORD": "noplenople123",
+#         "HOST": "localhost",
 #         "PORT": "5432",
 #     },
 # }
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "constructionDB",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    },
+}
 
 # DATABASES = {
 #     'default': {
