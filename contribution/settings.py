@@ -62,7 +62,13 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+<<<<<<< HEAD
     "http://154.117.212.59",
+=======
+    "http://154.117.212.59:8085",
+    "https://contribution-projet-accessdata.com",
+
+>>>>>>> origin/main
     # Autres origines si nécessaire
 ]
 
@@ -90,6 +96,20 @@ WSGI_APPLICATION = "contribution.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+<<<<<<< HEAD
+=======
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "contributiondb",
+        "USER": "postgres",
+        "PASSWORD": "noplenople123",
+        "HOST": "localhost",
+        "PORT": "5432",
+    },
+}
+
+>>>>>>> origin/main
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
