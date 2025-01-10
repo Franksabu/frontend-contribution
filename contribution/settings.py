@@ -96,8 +96,6 @@ WSGI_APPLICATION = "contribution.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-<<<<<<< HEAD
-=======
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -109,7 +107,6 @@ DATABASES = {
     },
 }
 
->>>>>>> origin/main
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
