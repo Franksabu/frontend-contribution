@@ -60,8 +60,8 @@ MIDDLEWARE = [
 
 # Configuration des origines autorisées
 CORS_ALLOWED_ORIGINS = [
-    # "http://localhost:8000",
-    #  "http://127.0.0.1:8000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
     "http://154.117.212.59:8085",
     "https://contribution-projet-accessdata.com",
 
