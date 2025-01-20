@@ -62,13 +62,9 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-<<<<<<< HEAD
     "http://154.117.212.59",
-=======
     "http://154.117.212.59:8085",
     "https://contribution-projet-accessdata.com",
-
->>>>>>> origin/main
     # Autres origines si nécessaire
 ]
 
@@ -106,26 +102,6 @@ DATABASES = {
         "PORT": "5432",
     },
 }
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "constructionDB",
-#         "USER": "postgres",
-#         "PASSWORD": "noplenople123",
-#         "HOST": "localhost",
-#         "PORT": "5432",
-#     },
-# }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',  # Emplacement de la base de données SQLite
-#     }
-# }
-
 
 # Password validation  admin   frank2024
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -171,7 +147,6 @@ MEDIA_URL = "/media/"  # It's common to add a leading slash for MEDIA_URL
 # Paths where Django will search for static files
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Directory "static" at the root of the project
-    # BASE_DIR / 'contribution/static',  # Uncomment if you have this directory
 ]
 
 # Directory where all static files will be collected for production
